@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://brjp56txat8ea"]
+
+[ext_resource type="Material" uid="uid://djayvm8cmomrq" path="res://addons/kenney_prototype_tools/materials/dark/material_11.tres" id="1_qtn3r"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_orukj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jqr2a"]
+
+[node name="Cube" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+material_override = ExtResource("1_qtn3r")
+mesh = SubResource("BoxMesh_orukj")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Mesh"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Mesh/StaticBody3D"]
+shape = SubResource("BoxShape3D_jqr2a")
