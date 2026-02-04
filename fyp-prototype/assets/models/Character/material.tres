@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=3 uid="uid://ldv0rrxm5ys0"]
+
+[ext_resource type="Shader" uid="uid://npin1mdujy54" path="res://assets/models/Character/outline.tres" id="1_u8ruf"]
+[ext_resource type="Shader" uid="uid://bboe8jmupadbi" path="res://assets/models/Character/toon3.tres" id="1_yn042"]
+[ext_resource type="Texture2D" uid="uid://dd2yjljsicdw7" path="res://assets/textures/Model_base.png" id="2_u8ruf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bqwug"]
+render_priority = 0
+shader = ExtResource("1_u8ruf")
+shader_parameter/Outline_Max_Size2 = 0.006
+shader_parameter/Outline_color = Color(0, 0, 0, 1)
+
+[resource]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_bqwug")
+shader = ExtResource("1_yn042")
+shader_parameter/Albedo = ExtResource("2_u8ruf")
