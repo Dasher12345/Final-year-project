@@ -63,6 +63,7 @@ var debug_override_timer := 0.0
 # State
 # =====================
 var jumps_left := 0
+var has_Jumped := false
 var dashes_left := 0
 
 var is_dashing := false
@@ -78,6 +79,8 @@ var wall_run_timer := 0.0
 var wall_run_cooldown_timer := 0.0
 var wall_normal := Vector3.ZERO
 
+var is_playing_jump_anim := false
+
 @onready var cam_pivot: Node3D = $SprintArmPivot
 var look_x := 0.0
 @export var mouse_sensitivity := 0.002
@@ -87,6 +90,8 @@ func _ready() -> void:
 	jumps_left = max_jumps
 	dashes_left = max_dashes
 	_update_label("READY")
+	
+
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -114,6 +119,10 @@ func _physics_process(delta: float) -> void:
 	if on_floor_now and not was_on_floor:
 		jumps_left = max_jumps
 		dashes_left = max_dashes
+		$AnimationPlayer.play("Landing")
+		$AnimationPlayer.seek(0.3, true)
+		
+		has_Jumped = false
 
 	was_on_floor = on_floor_now
 
@@ -130,6 +139,7 @@ func _physics_process(delta: float) -> void:
 
 	# --- Camera-relative input ---
 	var input_vec := Input.get_vector("left", "right", "forward", "back")
+	var is_moving_input := input_vec.length() > 0.1
 
 	var move_dir := cam_pivot.global_transform.basis * Vector3(input_vec.x, 0, input_vec.y)
 	move_dir.y = 0.0
@@ -198,17 +208,31 @@ func _physics_process(delta: float) -> void:
 			else:
 				velocity.y -= gravity_strength * delta
 
+
 		# =====================
 		# Jump (normal + wall jump)
 		# =====================
 		if Input.is_action_just_pressed("jump"):
+			#if not has_Jumped and Input.is_action_pressed("forward"):
+				#$AnimationPlayer.play("Running_Jump")
+				#has_Jumped = true
+			#elif not has_Jumped:
+				##is_playing_jump_anim = true
+				#$AnimationPlayer.play("Jumping")
+				#$AnimationPlayer.seek(0.3, true)
+				#has_Jumped = true
+			#else:
+				#$AnimationPlayer.play("Forward_Flip")
+				#$AnimationPlayer.seek(0.3,true)
+
 			if is_wall_running:
 				do_wall_jump(cam_forward)
-				# do_wall_jump sets a short label override
 			else:
 				if jumps_left > 0:
+					#$AnimationPlayer.play("Forward_Flip")
 					velocity.y = jump_velocity
 					jumps_left -= 1
+
 
 		# =====================
 		# Horizontal movement
@@ -243,6 +267,60 @@ func _physics_process(delta: float) -> void:
 			else:
 				_update_label("AIR", on_floor_now)
 
+		# =====================
+		# Ground animations
+		# =====================
+		
+	if on_floor_now:
+		#var vertical_movement := ((velocity.y) != 0)
+		
+		var hspeed := Vector3(velocity.x, 0, velocity.z).length()
+		# no input and no movement
+		if not is_moving_input and hspeed < 0.1 and is_on_floor() and not $AnimationPlayer.is_playing():
+			play_anim("Idle")
+		
+		if $AnimationPlayer.is_playing():
+			if $AnimationPlayer.current_animation in ["Jumping", "Running_Jump", "Forward_Flip"]:
+				pass 
+			elif Input.is_action_pressed("forward") and is_on_floor() and not is_dashing:
+				play_anim("Running")
+			elif Input.is_action_pressed("left") and is_on_floor() and not is_dashing:
+				play_anim("Run_Left")
+			elif Input.is_action_pressed("right") and is_on_floor() and not is_dashing:
+				play_anim("Run_Right")
+			elif Input.is_action_pressed("back") and is_on_floor() and not is_dashing:
+				play_anim("Walk_backwards")
+			# nothing else playing → we can still run if input exists
+
+		else:
+			if Input.is_action_pressed("forward") and hspeed > 0.1:
+				play_anim("Running")
+			elif Input.is_action_pressed("left") and hspeed > 0.1:
+				play_anim("Run_Left")
+			elif Input.is_action_pressed("right") and hspeed > 0.1:
+				play_anim("Run_Right")
+			elif Input.is_action_pressed("back") and hspeed > 0.1:
+				play_anim("Walk_backwards")
+
+		# =====================
+		# Jump animations
+		# =====================
+	
+	if Input.is_action_just_pressed("jump"):
+		if not has_Jumped and Input.is_action_pressed("forward"):
+			$AnimationPlayer.play("Running_Jump")
+			has_Jumped = true
+		elif not has_Jumped:
+			#is_playing_jump_anim = true
+			$AnimationPlayer.play("Jumping")
+			$AnimationPlayer.seek(0.3, true)
+			has_Jumped = true
+		else:
+			$AnimationPlayer.play("Forward_Flip")
+			$AnimationPlayer.seek(0.3,true)
+			#$AnimationPlayer.queue("Falling")
+			#$AnimationPlayer.get_animation("Falling").loop = true
+			
 	move_and_slide()
 
 # =====================
@@ -416,3 +494,11 @@ func raycast_wall(origin: Vector3, dir: Vector3) -> Dictionary:
 	query.exclude = [self]
 
 	return space.intersect_ray(query)
+
+# =====================
+# Animations
+# =====================
+
+func play_anim(Animation_name: String) -> void:
+	if $AnimationPlayer.current_animation != Animation_name:
+		$AnimationPlayer.play(Animation_name)

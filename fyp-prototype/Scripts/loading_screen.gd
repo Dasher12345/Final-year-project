@@ -8,7 +8,7 @@ func _ready():
 	scene = "res://Scenes/stage.tscn"
 	ResourceLoader.load_threaded_request(scene)
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	scene_load_status = ResourceLoader.load_threaded_get_status(scene,progress)
 	$Label.text = str(floor(progress[0]*100)) + "%"
 	if scene_load_status == ResourceLoader.THREAD_LOAD_LOADED:
