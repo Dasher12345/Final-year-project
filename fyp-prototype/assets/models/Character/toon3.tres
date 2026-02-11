@@ -51,7 +51,7 @@ op_type = 3
 
 [resource]
 code = "shader_type spatial;
-render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx;
 
 
 // Varyings
@@ -153,9 +153,9 @@ void light() {
 modes/cull = 2
 varyings/shade = "1,0"
 nodes/fragment/2/node = SubResource("VisualShaderNodeTexture2DParameter_8h7pd")
-nodes/fragment/2/position = Vector2(-720.23456, 216.33324)
+nodes/fragment/2/position = Vector2(-720.235, 216.333)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_xi6vp")
-nodes/fragment/3/position = Vector2(-140.23456, 216.33324)
+nodes/fragment/3/position = Vector2(-140.235, 216.333)
 nodes/fragment/4/node = SubResource("VisualShaderNodeInput_aw0l7")
 nodes/fragment/4/position = Vector2(-720, -160)
 nodes/fragment/5/node = SubResource("VisualShaderNodeVectorDecompose_yfvdc")

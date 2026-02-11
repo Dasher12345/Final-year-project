@@ -1,5 +1,7 @@
 extends Node3D
 
+var selection_mode := ""
+
 func _ready() -> void:
 	main_menu()
 	$Main_Menu.play()
@@ -9,21 +11,22 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	$Camera3D.rotate_y(0.002)
 
-
 func _on_option_pressed() -> void:
-	if $Random_Seed.button_pressed:
-		LevelOptions.use_random_seed = true
-		LevelOptions.seed = 0
-		var loadingscreen = load("res://Scenes/loading_screen.tscn")
-		get_tree().change_scene_to_packed(loadingscreen)
-	elif $Seed.button_pressed:
-		LevelOptions.use_random_seed = false
-		LevelOptions.seed = int($Seed_Input.text)
-		if LevelOptions.load_seed():
-			var loadingscreen = load("res://Scenes/loading_screen.tscn")
-			get_tree().change_scene_to_packed(loadingscreen)
-		else:
-			print("No saved seed found")
+	match selection_mode:
+		"random":
+			LevelOptions.use_random_seed = true
+			LevelOptions.scene = "res://Scenes/stage.tscn"
+
+		"custom":
+			LevelOptions.use_random_seed = false
+			LevelOptions.seed = int($Seed_Input.text)
+			LevelOptions.scene = "res://Scenes/stage.tscn"
+
+		_:
+			return
+
+	var loadingscreen = load("res://Scenes/loading_screen.tscn")
+	get_tree().change_scene_to_packed(loadingscreen)
 
 func _on_play_pressed() -> void:
 	dynamic_music($Options)
@@ -59,9 +62,11 @@ func switch_options():
 	$back.show()
 	$Random_Seed.disabled = false
 	$Seed.disabled = false
+	$"Test Level".disabled = false
 	$Seed_Input.show()
 	$Random_Seed.show()
 	$Seed.show()
+	$"Test Level".show()
 	
 func main_menu():
 	$Play.disabled = false
@@ -75,9 +80,11 @@ func main_menu():
 	$Random_Seed.disabled = true
 	$Seed.disabled = true
 	$Seed_Input.editable = false
+	$"Test Level".disabled = true
 	$Seed_Input.hide()
 	$Random_Seed.hide()
 	$Seed.hide()
+	$"Test Level".hide()
 	
 func _on_button_pressed() -> void:
 	main_menu()
@@ -85,8 +92,20 @@ func _on_button_pressed() -> void:
 
 
 func _on_random_seed_toggled(pressed) -> void:
-	$Seed_Input.editable = false
+	if pressed:
+		selection_mode = "random"
+		$Seed_Input.editable = false
 
 
 func _on_seed_toggled(pressed) -> void:
-	$Seed_Input.editable = true
+	if pressed:
+		selection_mode = "custom"
+		$Seed_Input.editable = true
+
+
+
+func _on_test_level_pressed() -> void:
+	LevelOptions.use_random_seed = false
+	LevelOptions.scene = "res://Scenes/Test_Level.tscn"
+	var loadingscreen = load("res://Scenes/loading_screen.tscn")
+	get_tree().change_scene_to_packed(loadingscreen)

@@ -1,7 +1,7 @@
 extends Node
 var seed: int = 0
 var use_random_seed := true
-
+var scene
 const save_path = "user://save_seed.data"
 
 func save_seed():
