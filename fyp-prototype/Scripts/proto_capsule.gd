@@ -2,12 +2,21 @@ extends CharacterBody3D
 
 @onready var label: Label = $"../Label"
 
+
+@onready var model_mesh: MeshInstance3D = $Armature/Skeleton3D/Model
+@export var material_p2: Material
+
+@export var player_id = 1
+
+@export var stick_sensitivity := 3.0
+@export var stick_deadzone := 0.15
+
 # =====================
 # Movement tuning
 # =====================
 @export var move_speed := 30.0
 @export var ground_accel := 120.0
-@export var ground_deaccel := 90.0
+@export var ground_deaccel := 350.0
 
 @export var air_accel := 30.0
 @export var air_deaccel := 10.0
@@ -89,6 +98,9 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	jumps_left = max_jumps
 	dashes_left = max_dashes
+	
+	if player_id == 2:
+		model_mesh.set_surface_override_material(0, material_p2.duplicate())
 	_update_label("READY")
 	
 
@@ -138,7 +150,9 @@ func _physics_process(delta: float) -> void:
 			wall_run_cooldown_timer = 0.0
 
 	# --- Camera-relative input ---
-	var input_vec := Input.get_vector("left", "right", "forward", "back")
+	var input_vec := Input.get_vector(action("left"), action("right"), 
+									  action("forward"), action("back"))
+	
 	var is_moving_input := input_vec.length() > 0.1
 
 	var move_dir := cam_pivot.global_transform.basis * Vector3(input_vec.x, 0, input_vec.y)
@@ -212,19 +226,7 @@ func _physics_process(delta: float) -> void:
 		# =====================
 		# Jump (normal + wall jump)
 		# =====================
-		if Input.is_action_just_pressed("jump"):
-			#if not has_Jumped and Input.is_action_pressed("forward"):
-				#$AnimationPlayer.play("Running_Jump")
-				#has_Jumped = true
-			#elif not has_Jumped:
-				##is_playing_jump_anim = true
-				#$AnimationPlayer.play("Jumping")
-				#$AnimationPlayer.seek(0.3, true)
-				#has_Jumped = true
-			#else:
-				#$AnimationPlayer.play("Forward_Flip")
-				#$AnimationPlayer.seek(0.3,true)
-
+		if Input.is_action_just_pressed(action("jump")):
 			if is_wall_running:
 				do_wall_jump(cam_forward)
 			else:
@@ -254,7 +256,7 @@ func _physics_process(delta: float) -> void:
 		# =====================
 		# Dash start (blocked during wall run)
 		# =====================
-		if (not is_wall_running) and Input.is_action_just_pressed("dash") and dashes_left > 0 and dash_cooldown_timer <= 0.0:
+		if (not is_wall_running) and Input.is_action_just_pressed(action("dash")) and dashes_left > 0 and dash_cooldown_timer <= 0.0:
 			start_dash(move_dir)
 			_update_label("DASH", on_floor_now)
 
@@ -282,32 +284,32 @@ func _physics_process(delta: float) -> void:
 		if $AnimationPlayer.is_playing():
 			if $AnimationPlayer.current_animation in ["Jumping", "Running_Jump", "Forward_Flip"]:
 				pass 
-			elif Input.is_action_pressed("forward") and is_on_floor() and not is_dashing:
+			elif Input.is_action_pressed(action("forward")) and is_on_floor() and not is_dashing:
 				play_anim("Running")
-			elif Input.is_action_pressed("left") and is_on_floor() and not is_dashing:
+			elif Input.is_action_pressed(action("left")) and is_on_floor() and not is_dashing:
 				play_anim("Run_Left")
-			elif Input.is_action_pressed("right") and is_on_floor() and not is_dashing:
+			elif Input.is_action_pressed(action("right")) and is_on_floor() and not is_dashing:
 				play_anim("Run_Right")
-			elif Input.is_action_pressed("back") and is_on_floor() and not is_dashing:
+			elif Input.is_action_pressed(action("back")) and is_on_floor() and not is_dashing:
 				play_anim("Walk_backwards")
 			# nothing else playing → we can still run if input exists
 
 		else:
-			if Input.is_action_pressed("forward") and hspeed > 0.1:
+			if Input.is_action_pressed(action("forward")) and hspeed > 0.1:
 				play_anim("Running")
-			elif Input.is_action_pressed("left") and hspeed > 0.1:
+			elif Input.is_action_pressed(action("left")) and hspeed > 0.1:
 				play_anim("Run_Left")
-			elif Input.is_action_pressed("right") and hspeed > 0.1:
+			elif Input.is_action_pressed(action("right")) and hspeed > 0.1:
 				play_anim("Run_Right")
-			elif Input.is_action_pressed("back") and hspeed > 0.1:
+			elif Input.is_action_pressed(action("back")) and hspeed > 0.1:
 				play_anim("Walk_backwards")
 
 		# =====================
 		# Jump animations
 		# =====================
 	
-	if Input.is_action_just_pressed("jump"):
-		if not has_Jumped and Input.is_action_pressed("forward"):
+	if Input.is_action_just_pressed(action("jump")):
+		if not has_Jumped and Input.is_action_pressed(action("forward")):
 			$AnimationPlayer.play("Running_Jump")
 			has_Jumped = true
 		elif not has_Jumped:
@@ -320,7 +322,30 @@ func _physics_process(delta: float) -> void:
 			$AnimationPlayer.seek(0.3,true)
 			#$AnimationPlayer.queue("Falling")
 			#$AnimationPlayer.get_animation("Falling").loop = true
-			
+	
+	# =====================
+	# Right Stick Camera
+	# =====================
+
+	var look_x_input := Input.get_action_strength("look_right_%d" % player_id) \
+		- Input.get_action_strength("look_left_%d" % player_id)
+
+	var look_y_input := Input.get_action_strength("look_down_%d" % player_id) \
+		- Input.get_action_strength("look_up_%d" % player_id)
+
+	# Deadzone
+	if abs(look_x_input) < stick_deadzone:
+		look_x_input = 0.0
+	if abs(look_y_input) < stick_deadzone:
+		look_y_input = 0.0
+
+	# Apply rotation
+	rotate_y(-look_x_input * stick_sensitivity * delta)
+
+	look_x -= look_y_input * stick_sensitivity * delta
+	look_x = clamp(look_x, -1.2, 1.2)
+	cam_pivot.rotation.x = look_x
+
 	move_and_slide()
 
 # =====================
@@ -494,6 +519,14 @@ func raycast_wall(origin: Vector3, dir: Vector3) -> Dictionary:
 	query.exclude = [self]
 
 	return space.intersect_ray(query)
+
+
+# =====================
+# Multiplayer input helper
+# =====================
+
+func action(name: String) -> String:
+	return "%s_%d" % [name, player_id]
 
 # =====================
 # Animations

@@ -2,7 +2,6 @@ extends Node3D
 var final_checkpoint = false
 
 func _ready():
-	Signalbus.checkpoint_reached.connect(_on_checkpoint_reached)
 	$Stage_OST.play()
 	resume()
 
