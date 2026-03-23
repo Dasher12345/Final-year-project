@@ -3,6 +3,7 @@ extends Node3D
 var selection_mode := ""
 
 func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	main_menu()
 	$Main_Menu.play()
 	$Options.play()

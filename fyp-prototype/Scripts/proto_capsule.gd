@@ -99,6 +99,9 @@ func _ready() -> void:
 	jumps_left = max_jumps
 	dashes_left = max_dashes
 	
+	$AnimationPlayer.get_animation("Wall_Running_left").loop_mode = Animation.LOOP_LINEAR
+	$AnimationPlayer.get_animation("Wall_Running_right").loop_mode = Animation.LOOP_LINEAR
+	
 	if player_id == 2:
 		model_mesh.set_surface_override_material(0, material_p2.duplicate())
 	_update_label("READY")
@@ -231,7 +234,6 @@ func _physics_process(delta: float) -> void:
 				do_wall_jump(cam_forward)
 			else:
 				if jumps_left > 0:
-					#$AnimationPlayer.play("Forward_Flip")
 					velocity.y = jump_velocity
 					jumps_left -= 1
 
@@ -317,11 +319,13 @@ func _physics_process(delta: float) -> void:
 			$AnimationPlayer.play("Jumping")
 			$AnimationPlayer.seek(0.3, true)
 			has_Jumped = true
-		else:
+		elif jumps_left == 0:
 			$AnimationPlayer.play("Forward_Flip")
 			$AnimationPlayer.seek(0.3,true)
-			#$AnimationPlayer.queue("Falling")
-			#$AnimationPlayer.get_animation("Falling").loop = true
+			$AnimationPlayer.queue("Flip_to_Falling3")
+			$AnimationPlayer.get_animation("Falling").loop = true
+			$AnimationPlayer.queue("Falling")
+			jumps_left -= 1
 	
 	# =====================
 	# Right Stick Camera
@@ -428,7 +432,21 @@ func begin_wall_run(hit_normal: Vector3) -> void:
 	is_wall_running = true
 	wall_run_timer = wall_run_duration
 	wall_normal = hit_normal.normalized()
-
+	
+	# Determine which side the wall is on (relative to camera)
+	var cam_right := cam_pivot.global_transform.basis.x
+	cam_right.y = 0.0
+	cam_right = cam_right.normalized()
+	
+	# If dot > 0 => wall normal points toward camera-right direction
+	# That usually means wall is on the RIGHT side of the player.
+	var side := cam_right.dot(wall_normal)
+	
+	if side > 0.0:
+		$AnimationPlayer.play("Wall_Running_left")
+	else:
+		$AnimationPlayer.play("Wall_Running_right")
+	
 	if velocity.y < -wall_run_max_fall_speed:
 		velocity.y = -wall_run_max_fall_speed
 
@@ -496,7 +514,14 @@ func do_wall_jump(cam_forward: Vector3) -> void:
 	velocity = push + up + forward
 
 	dashes_left = max_dashes
-	jumps_left = max_jumps
+
+	# Count wall jump as the first jump in the air chain,
+	# so the next jump can become the flip.
+	jumps_left = max_jumps - 1
+	has_Jumped = true
+
+	$AnimationPlayer.play("Jumping")
+	$AnimationPlayer.seek(0.3, true)
 
 	# Label flash
 	debug_override_text = "WALL JUMP"
