@@ -1,13 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://2hvmwet7jf82"]
+[gd_scene load_steps=12 format=3 uid="uid://2hvmwet7jf82"]
 
 [ext_resource type="Script" uid="uid://cc3srpr3vv8wp" path="res://Scripts/level_generator.gd" id="1_q7b6x"]
-[ext_resource type="PackedScene" uid="uid://dcnvhgo5ke8ki" path="res://Scenes/platform_road.tscn" id="2_ciddx"]
-[ext_resource type="PackedScene" uid="uid://dwspontnu48kw" path="res://Scenes/platform_wall.tscn" id="3_5lsef"]
-[ext_resource type="PackedScene" uid="uid://cwb1b0u1yn5mm" path="res://Scenes/platform_hazard.tscn" id="4_ibufi"]
+[ext_resource type="PackedScene" uid="uid://cu2dd4wq77abs" path="res://Scenes/Track_Sections/sec_1_h.tscn" id="3_x4guj"]
+[ext_resource type="PackedScene" uid="uid://dk7uas0pr4k3m" path="res://Scenes/Track_Sections/sec_2_h.tscn" id="4_j62gx"]
+[ext_resource type="PackedScene" uid="uid://bbih1xwm46h6p" path="res://Scenes/Track_Sections/subsec_1_h.tscn" id="5_whj25"]
+[ext_resource type="PackedScene" uid="uid://cnifg6xd5x0pt" path="res://Scenes/Track_Sections/subsec_2_h.tscn" id="6_iydtg"]
+[ext_resource type="PackedScene" uid="uid://dc225klboo4a" path="res://Scenes/Track_Sections/subsec_3_h.tscn" id="7_uho10"]
+[ext_resource type="PackedScene" uid="uid://c84kbjojd5ncy" path="res://Scenes/Track_Sections/subsec_4_h.tscn" id="8_3wf4k"]
+[ext_resource type="PackedScene" uid="uid://pqc45f4f2iky" path="res://Scenes/start_platform.tscn" id="8_whj25"]
+[ext_resource type="PackedScene" uid="uid://djgxlvclt4scx" path="res://Scenes/checkpoint_platform.tscn" id="9_iydtg"]
+[ext_resource type="PackedScene" uid="uid://djg4ueqqg4p5r" path="res://Scenes/end_platform.tscn" id="10_uho10"]
+[ext_resource type="PackedScene" uid="uid://b6dntrf3qy8ir" path="res://Scenes/start_platform_m.tscn" id="11_iydtg"]
 
 [node name="LevelGenerator" type="Node3D"]
 script = ExtResource("1_q7b6x")
-platform_scenes = Array[PackedScene]([ExtResource("2_ciddx"), ExtResource("3_5lsef"), ExtResource("4_ibufi")])
+section_scenes = Array[PackedScene]([ExtResource("3_x4guj"), ExtResource("4_j62gx")])
+check_platforms = Array[PackedScene]([ExtResource("8_whj25"), ExtResource("9_iydtg"), ExtResource("10_uho10"), ExtResource("11_iydtg")])
+sub_sections = Array[PackedScene]([ExtResource("5_whj25"), ExtResource("6_iydtg"), ExtResource("7_uho10"), ExtResource("8_3wf4k")])
 
 [node name="seed" type="Label" parent="."]
 offset_right = 40.0

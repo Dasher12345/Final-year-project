@@ -3,6 +3,8 @@ var seed: int = 0
 var use_random_seed := true
 var scene
 const save_path = "user://save_seed.data"
+var stage
+var mult = false
 
 func save_seed():
 	var file = FileAccess.open(save_path,FileAccess.WRITE)

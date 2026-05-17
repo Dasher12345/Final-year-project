@@ -1,0 +1,51 @@
+[gd_scene load_steps=4 format=3 uid="uid://djgxlvclt4scx"]
+
+[ext_resource type="Script" uid="uid://dhhc050t1i375" path="res://Scenes/checkpoint_platform.gd" id="1_0mahj"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_30odd"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_0mahj"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="checkpoint_platform" type="Node3D"]
+script = ExtResource("1_0mahj")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(33.29949, 0, 0, 0, 0.89611554, 0, 0, 0, 63.402046, 0.044617653, 0, 40.167587)
+mesh = SubResource("BoxMesh_30odd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0mahj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(15.80542, 0.77449006, 0, -27.156431, 0.45076397, 0, 0, 0, 63.402046, 8.283, 13.451, 40.168)
+mesh = SubResource("BoxMesh_30odd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0mahj")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(15.782189, -0.7748752, 0, 27.169931, 0.45010144, 0, 0, 0, 63.402046, -8.269, 13.444, 40.168)
+mesh = SubResource("BoxMesh_30odd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_0mahj")
+
+[node name="end" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 71.786316)
+
+[node name="checkpoint" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.3700056)
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="checkpoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.898107)
+polygon = PackedVector2Array(15.7572975, 0.061778784, -16.011225, 0.061778784, 0.00031236623, 26.985584)
+
+[connection signal="area_shape_entered" from="checkpoint" to="." method="_on_checkpoint_area_shape_entered"]
+[connection signal="body_entered" from="checkpoint" to="." method="_on_checkpoint_body_entered"]

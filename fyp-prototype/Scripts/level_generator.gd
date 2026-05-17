@@ -1,73 +1,81 @@
 extends Node3D
 
-@export var platform_scenes: Array[PackedScene] = []
-@export var min_section_length := 2
-@export var max_section_length := 5
-
-@export var platform_count := 30  # total number of platforms to generate
-
-# Directional movement for platform placement
-var direction := Vector3.FORWARD
+@export var section_scenes: Array[PackedScene] = []
+@export var sections := 5
+@export var check_platforms: Array[PackedScene] = []
+@export var sub_sections: Array[PackedScene] = []
+var stage = ["main", "sub"]
+var p1
+var p2
+var s = 3
 
 var rng := RandomNumberGenerator.new()
 var last_position := Vector3(0, 780, 0)
 
-# Type-specific gaps and heights
-var platform_settings := [
-	{"min_gap": 150, "max_gap": 200, "min_height": 0, "max_height": 20, "size": Vector3(372,1,108)}, # Road
-	{"min_gap": 0, "max_gap": 10, "min_height": 0, "max_height": 15, "size": Vector3(45,15,1)},   # Wall
-	{"min_gap": 150, "max_gap": 200, "min_height": 0, "max_height": 20, "size": Vector3(372,60,151)} # Hazard
-]
-
 func _ready():
-	# Setup RNG with seed
 	if LevelOptions.use_random_seed:
 		rng.randomize()
 		LevelOptions.seed = rng.randi_range(0, 999_999_999)
 	else:
 		LevelOptions.seed = clamp(LevelOptions.seed, 0, 999_999_999)
+
 	rng.seed = LevelOptions.seed
 	LevelOptions.save_seed()
+
 	$seed.text = "SEED: %d" % LevelOptions.seed
 
-	# Starting platform
-	var starting_platform = platform_scenes[0].instantiate()
-	starting_platform.position = last_position
-	add_child(starting_platform)
 	generate_level()
 
+
 func generate_level():
+	if LevelOptions.mult:
+		var start_platform = await spawn_section(check_platforms[3])
+		p1 = start_platform.get_node("GridContainer/SubViewportContainer/SubViewport/P1")
+		p2 = start_platform.get_node("GridContainer/SubViewportContainer2/SubViewport/P2")
+		p1.global_transform = start_platform.get_node("p1_spawn").global_transform
+		p2.global_transform = start_platform.get_node("p2_spawn").global_transform
+		p1.add_to_group("players")
+		p2.add_to_group("players")
+	else:
+		var start_platform = await spawn_section(check_platforms[0])
+		p1 = start_platform.get_node("P1")
+		p1.add_to_group("players")
 	var spawned := 1
-	while spawned < platform_count:
-		if spawned == 4:
-			spawn_platform(platform_scenes[2], platform_settings[2])
+	while spawned < sections:
+		var section_select = stage[rng.randi_range(0, stage.size() - 1)]
+		if section_select == "main":
+			var scene = section_scenes[rng.randi_range(0, section_scenes.size() - 1)]
+			await spawn_section(scene)
 			spawned += 1
-		# Pick a section length
-		var section_length := rng.randi_range(min_section_length, max_section_length)
-
-		# Pick a platform type
-		var settings = platform_settings[0]
-		var scene = platform_scenes[0]
-
-		# Spawn section
-		for i in range(section_length):
-			if spawned >= platform_count:
-				break
-			spawn_platform(scene, settings)
+		elif section_select == "sub":
+			var subs_c := 0
+			var subs = sub_sections.duplicate()
+			while subs_c < s and subs.size() > 0:
+				var sub_select = subs[rng.randi_range(0, subs.size() - 1)]
+				await spawn_section(sub_select)
+				subs.erase(sub_select)
+				subs_c += 1
 			spawned += 1
-
+		if spawned < sections:
+			await spawn_section(check_platforms[1])
+	await spawn_section(check_platforms[2])
 	print("Seed:", LevelOptions.seed)
 
-func spawn_platform(scene: PackedScene, settings: Dictionary):
-	var platform = scene.instantiate()
 
-	# Random gap & height for this platform type
-	var gap = rng.randf_range(settings.min_gap, settings.max_gap)
-	var height = rng.randf_range(settings.min_height, settings.max_height)
+func spawn_section(scene: PackedScene):
 
-	last_position += direction * gap
-	last_position.y += height
+	if scene == null:
+		print("ERROR: Scene is null!")
+		return null
 
-	platform.position = last_position
-	add_child(platform)
-	print("Spawned %s at %s" % [platform.name, last_position])
+	var section = scene.instantiate()
+	add_child(section)
+
+	section.position = last_position
+
+	await get_tree().process_frame
+
+	var end_marker = section.get_node("end")
+	last_position = end_marker.global_position
+
+	return section

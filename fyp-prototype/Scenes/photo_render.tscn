@@ -1,0 +1,89 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcexuwu3pc22k"]
+
+[ext_resource type="Script" uid="uid://cemckmi8caynb" path="res://Scenes/photo_render.gd" id="1_57klk"]
+[ext_resource type="Shader" uid="uid://do7wtlsnk55fu" path="res://Scenes/platform_cyber.gdshader" id="3_02j6n"]
+[ext_resource type="PackedScene" uid="uid://ca22k8ofvbl48" path="res://assets/models/Character/character_model_v3.tscn" id="3_57klk"]
+[ext_resource type="PackedScene" uid="uid://bqbojpw6ulwks" path="res://Scenes/cyber_screen.tscn" id="4_02j6n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wt1wj"]
+render_priority = 0
+shader = ExtResource("3_02j6n")
+shader_parameter/bg_color = Color(0.01, 0.02, 0.05, 1)
+shader_parameter/line_color = Color(0.6379303, 0.17327467, 0.21104774, 1)
+shader_parameter/grid_scale = 6.045
+shader_parameter/line_thickness = 5.44
+shader_parameter/glow_strength = 2.5
+
+[node name="Photo_Render" type="Node3D"]
+script = ExtResource("1_57klk")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1.01623, 0, 0, 0, 1.8909202, 0, 0, 0, 6.42004, -58.572426, 577.6746, -1.69171)
+use_collision = true
+size = Vector3(136.642, 1, 5.1158447)
+material = SubResource("ShaderMaterial_wt1wj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.0148981195, -0.17212993, 0.9849616, 0.04163274, 0.98410994, 0.1726108, -0.9990219, 0.043578234, -0.0074951462, -154.9142, 587.7945, 2.3588462)
+
+[node name="Cyber" parent="." instance=ExtResource("4_02j6n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2938232, 0.7970581, -8.490883)
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.62714654, 0, -14.246107, 0, 1, 0, 14.352506, 0, -0.62249756, -149.68526, 586.5448, 4.7966976)
+use_collision = true
+size = Vector3(0.0922852, 7.415555, 1.95947)
+material = SubResource("ShaderMaterial_wt1wj")
+
+[node name="CSGBox3D18" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.62714654, 0, -14.246107, 0, 1, 0, 14.352506, 0, -0.62249756, -179.74529, 586.0592, -10.703331)
+use_collision = true
+size = Vector3(0.0922852, 11.213, 1.95947)
+material = SubResource("ShaderMaterial_wt1wj")
+
+[node name="CSGBox3D21" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.7237407, 0, -17.684927, 0, 2.7469103, 0, 16.563095, 0, -0.77275956, -246.30518, 580.5589, -8.005054)
+use_collision = true
+size = Vector3(1, 1.58746, 5.21732)
+material = SubResource("ShaderMaterial_wt1wj")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(958, 1080)
+render_target_update_mode = 4
+
+[node name="P1" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("3_57klk")]
+transform = Transform3D(0.0579299, 0, 0.998321, 0, 1, 0, -0.998321, 0, 0.0579299, 5.95872, 579.666, 1.21574)
+air_deaccel = 30.0
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
+handle_input_locally = false
+size = Vector2i(958, 1080)
+render_target_update_mode = 4
+
+[node name="P2" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("3_57klk")]
+transform = Transform3D(0.0579299, 0, 0.998321, 0, 1, 0, -0.998321, 0, 0.0579299, 5.95872, 579.666, -1.01508)
+player_id = 2
+air_deaccel = 30.0

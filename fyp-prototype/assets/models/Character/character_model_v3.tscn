@@ -21552,6 +21552,7 @@ shader_parameter/mask_edge = 0.45
 shader_parameter/animation_speed = 20.0
 
 [node name="Character" type="CharacterBody3D" groups=["player"]]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_cthqt")
 material_p2 = ExtResource("2_6mene")
 
@@ -22086,7 +22087,8 @@ spring_length = 3.0
 [node name="SpringPosition" type="Node3D" parent="SprintArmPivot/SpringArm3D"]
 
 [node name="Camera3D" type="Camera3D" parent="SprintArmPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.9907429, 0.13575128, 0, -0.19751097, 1.4414791, 0, 1.6165587, 1.4777398)
+transform = Transform3D(1, 0, 0, 0, 1.0094097, -0.20690748, 0, 0.04092199, 1.4329969, 0.026195168, 1.8446609, 1.4777398)
+current = true
 
 [node name="Coyote_Timer" type="Timer" parent="."]
 wait_time = 0.2

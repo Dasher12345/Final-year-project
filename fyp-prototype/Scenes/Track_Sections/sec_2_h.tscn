@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://dk7uas0pr4k3m"]
+
+[ext_resource type="PackedScene" uid="uid://codfms1crg3a8" path="res://Scenes/falling_platform.tscn" id="1_1lqjn"]
+
+[node name="sec2_h" type="Node3D"]
+
+[node name="falling_platform" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 293.78857)
+
+[node name="falling_platform2" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.770657, 0.66275406, 302.0553)
+
+[node name="falling_platform3" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.476767, 0.66275406, 267.40643)
+
+[node name="falling_platform4" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.88248, 0.66275406, 244.77849)
+
+[node name="falling_platform5" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.630499, 0.66275406, 233.09308)
+
+[node name="falling_platform6" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32042503, 0.66275406, 332.32147)
+
+[node name="falling_platform7" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.155838, 0.66275406, 272.01825)
+
+[node name="falling_platform8" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 211.2262)
+
+[node name="falling_platform9" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.496206, 0.66275406, 204.73308)
+
+[node name="falling_platform10" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.71546, 0.66275406, 168.44359)
+
+[node name="falling_platform11" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 175.63084)
+
+[node name="falling_platform12" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.63604, 0.66275406, 144.65358)
+
+[node name="falling_platform13" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.00153, 0.66275406, 130.33382)
+
+[node name="falling_platform14" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 111.4861)
+
+[node name="falling_platform15" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.534187, 0.66275406, 91.233505)
+
+[node name="falling_platform16" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.79364, 0.66275406, 55.746902)
+
+[node name="falling_platform17" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2392197, 0.66275406, 27.69365)
+
+[node name="falling_platform18" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.13453, 0.66275406, 72.675064)
+
+[node name="falling_platform19" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.029556, 0.66275406, 46.80992)
+
+[node name="falling_platform20" parent="." instance=ExtResource("1_1lqjn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.071241, 0.66275406, 97.81343)
+
+[node name="end" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 332.3048)

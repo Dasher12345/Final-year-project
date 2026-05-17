@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqbojpw6ulwks"]
+
+[ext_resource type="Script" uid="uid://h0vpb1vtdyy4" path="res://horizon_screen.gd" id="1_sd6q4"]
+[ext_resource type="PackedScene" uid="uid://ct1yigwd6vxdm" path="res://Scenes/cyber_cube.tscn" id="2_76pn2"]
+[ext_resource type="Shader" uid="uid://dnp47ovmi8aw4" path="res://cybersky.gdshader" id="3_q0nx6"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l0jo0"]
+render_priority = 0
+shader = ExtResource("3_q0nx6")
+shader_parameter/bg_color = Color(0.01, 0.01, 0.05, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 20.0
+shader_parameter/line_thickness = 6.73
+shader_parameter/glow_strength = 2.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_lto2q"]
+material = SubResource("ShaderMaterial_l0jo0")
+flip_faces = true
+
+[node name="Cyber" type="Node3D"]
+script = ExtResource("1_sd6q4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.22941265, -0.23553386, 0.94440126, -0.1698381, -0.9650808, -0.19943452, 0.95839703, -0.11464245, -0.26140413, 18.332708, 133.49991, 0)
+light_color = Color(0.7344887, 0.6792639, 0.69719094, 1)
+light_energy = 1.7
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.9127985, 0, 0.40841016, 0, 1, 0, -0.40841016, 0, -0.9127985, -61.592484, 114.370445, 60.161472)
+fov = 75.42863
+
+[node name="Cyber Cube" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(19.704222, 0, 0, 0, 19.704222, 0, 0, 0, 19.704222, -4.5464897, 115.89102, 144.90839)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4000, 0, 0, 0, 3000, 0, 0, 0, 4000, -0.017102242, 0.017089844, -0.00026607513)
+mesh = SubResource("BoxMesh_lto2q")
+
+[node name="Cyber Cube2" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-1.2522974, 14.066591, -13.741153, 7.2573743, 13.127575, 12.777082, 18.276182, -4.249037, -6.0152655, -69.353, 115.71886, 144.90839)
+
+[node name="Cyber Cube3" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-1.896203, 12.836435, -14.828582, 7.1163282, 14.332766, 11.497227, 18.27618, -4.2490363, -6.0152636, -161.10269, 96.60495, 63.662415)
+
+[node name="Cyber Cube4" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-19.391483, 3.2001786, 1.4091487, 2.020742, 3.7756062, 19.233252, 2.8536737, 19.072498, -4.043869, -209.3128, 90.56069, -6.234068)
+
+[node name="Cyber Cube5" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-0.5875874, -1.50899, 19.637571, 19.693995, -0.28508568, 0.56737167, 0.24067116, 19.644295, 1.5167092, -124.78981, 101.4323, -18.015274)
+
+[node name="Cyber Cube6" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(0.8842282, -19.604824, 1.7679205, 10.399922, 1.9678242, 16.620045, -16.712757, 0.18728685, 10.435761, -160.9158, 112.842575, 135.87508)
+
+[node name="Cyber Cube7" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(13.00819, 7.8099065, 12.571754, 13.379286, 0.9505324, -14.434253, -6.3275795, 18.065395, -4.6754565, -74.58457, 101.4323, -18.015274)
+
+[node name="Cyber Cube8" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-4.4474845, -12.865512, 14.246233, 9.641629, 11.147907, 13.077459, -16.598663, 9.922678, 3.7791016, 66.359985, 101.33178, 99.236565)
+
+[node name="Cyber Cube9" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(-3.8520753, 18.174599, -6.5652256, 10.82521, 7.574932, 14.618208, 16.007278, -0.74905515, -11.465705, 12.942593, 115.78616, 62.84533)
+
+[node name="Cyber Cube10" parent="." instance=ExtResource("2_76pn2")]
+transform = Transform3D(3.5578458, -16.74166, 9.762957, 16.700209, 7.684955, 7.0923333, -9.833687, 6.9939322, 15.576905, -23.970161, 114.5659, 13.259712)

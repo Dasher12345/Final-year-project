@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct1yigwd6vxdm"]
+
+[ext_resource type="Script" uid="uid://cg1sfu58pbwv" path="res://Scenes/cyber_cube.gd" id="1_bluki"]
+[ext_resource type="Shader" uid="uid://k6gmedsq5gu" path="res://Scenes/cube_cyber.gdshader" id="1_ost5q"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a14dk"]
+render_priority = 0
+shader = ExtResource("1_ost5q")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0.6745098, 0, 0, 1)
+shader_parameter/grid_scale = 4.49
+shader_parameter/line_thickness = 1.2
+shader_parameter/glow_strength = 2.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_7xdwh"]
+material = SubResource("ShaderMaterial_a14dk")
+flip_faces = true
+
+[node name="Cyber Cube" type="MeshInstance3D"]
+transform = Transform3D(19.704222, 0, 0, 0, 19.704222, 0, 0, 0, 19.704222, 0, 0, 0)
+mesh = SubResource("BoxMesh_7xdwh")
+script = ExtResource("1_bluki")

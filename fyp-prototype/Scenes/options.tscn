@@ -1,0 +1,297 @@
+[gd_scene load_steps=22 format=3 uid="uid://6m7fgekl7bsm"]
+
+[ext_resource type="Script" uid="uid://0eea8f12haat" path="res://Scenes/options.gd" id="1_qyyw6"]
+[ext_resource type="Texture2D" uid="uid://duues1bxl00o2" path="res://assets/images/red_hexa.jpg" id="2_38txh"]
+[ext_resource type="Texture2D" uid="uid://b8vsrtbqli4yv" path="res://assets/main_menu/Borders.png" id="2_ww8vx"]
+[ext_resource type="Script" uid="uid://civxveqidljut" path="res://Scenes/borders.gd" id="3_kftxf"]
+[ext_resource type="Script" uid="uid://dalq2u2rxs8f6" path="res://Scenes/red_hexa.gd" id="3_o88n5"]
+[ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="5_5a0sy"]
+[ext_resource type="AudioStream" uid="uid://omedwsyjjnie" path="res://Sound/Options OST.mp3" id="6_g5vgl"]
+[ext_resource type="Texture2D" uid="uid://d3auexn5wy8yc" path="res://assets/Buttons/Back.png" id="7_srb65"]
+[ext_resource type="Texture2D" uid="uid://id63iq1kkvi1" path="res://assets/Buttons/Back_pressed.png" id="8_qcivb"]
+[ext_resource type="FontFile" uid="uid://bm81gd1j2gelh" path="res://assets/fonts/Mont-HeavyDEMO.otf" id="10_ywsft"]
+[ext_resource type="Texture2D" uid="uid://ta7vsvwuq261" path="res://assets/Buttons/Volume.png" id="11_mgjjt"]
+[ext_resource type="Texture2D" uid="uid://hhshofce10ow" path="res://assets/Buttons/Volume_hold.png" id="12_pqc76"]
+[ext_resource type="Texture2D" uid="uid://dmh08gvp6ufm0" path="res://assets/Buttons/Volume_pressed.png" id="13_ojj2c"]
+[ext_resource type="Texture2D" uid="uid://sq4lw4ugp45r" path="res://assets/Buttons/Display.png" id="14_wxr1c"]
+[ext_resource type="Texture2D" uid="uid://cm3bgqygbrxvb" path="res://assets/Buttons/Display_hold.png" id="15_eyu8e"]
+[ext_resource type="Texture2D" uid="uid://b32pqhh6p6x6j" path="res://assets/Buttons/Display_pressed.png" id="16_kyubx"]
+[ext_resource type="Texture2D" uid="uid://c1oosnyjtn03h" path="res://assets/Buttons/Save.png" id="17_j18tl"]
+[ext_resource type="Texture2D" uid="uid://bqgg6xn2nnici" path="res://assets/Buttons/Save_pressed.png" id="18_gc10f"]
+[ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="19_mgjjt"]
+[ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="20_pqc76"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38txh"]
+bg_color = Color(0.28118682, 0.28118688, 0.28118682, 0.78039217)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="Options" type="Node2D"]
+script = ExtResource("1_qyyw6")
+
+[node name="RedHexa" type="Sprite2D" parent="."]
+position = Vector2(-567, 474.99997)
+scale = Vector2(0.835, 0.835)
+texture = ExtResource("2_38txh")
+offset = Vector2(1827.7573, 151.48431)
+script = ExtResource("3_o88n5")
+
+[node name="RedHexa2" type="Sprite2D" parent="RedHexa"]
+position = Vector2(-2298.2036, 3.6547997e-05)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("2_38txh")
+offset = Vector2(1827.7573, 151.48431)
+
+[node name="Borders" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("2_ww8vx")
+script = ExtResource("3_kftxf")
+
+[node name="Borders2" type="Sprite2D" parent="Borders"]
+position = Vector2(1920, 0)
+texture = ExtResource("2_ww8vx")
+
+[node name="Options" type="Label" parent="."]
+offset_left = 11.0
+offset_top = 19.0
+offset_right = 484.0
+offset_bottom = 230.0
+theme_override_fonts/font = ExtResource("5_5a0sy")
+theme_override_font_sizes/font_size = 100
+text = "Options
+"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_g5vgl")
+volume_db = 6.0
+parameters/looping = true
+
+[node name="back" type="TextureButton" parent="."]
+offset_top = 823.0
+offset_right = 828.0
+offset_bottom = 967.0
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("7_srb65")
+texture_hover = ExtResource("8_qcivb")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_left = 757.0
+offset_top = 288.0
+offset_right = 1827.0
+offset_bottom = 805.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_38txh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
+offset_left = 1269.0
+offset_top = 366.0
+offset_right = 1669.0
+offset_bottom = 766.0
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 124
+
+[node name="Master Volume" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="Music" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="SFX" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Master Volume" type="Label" parent="CanvasLayer"]
+offset_left = 870.0
+offset_top = 357.0
+offset_right = 1182.0
+offset_bottom = 391.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "MASTER VOLUME"
+
+[node name="Music" type="Label" parent="CanvasLayer"]
+offset_left = 957.0
+offset_top = 499.0
+offset_right = 1269.0
+offset_bottom = 533.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "MUSIC"
+
+[node name="SFX" type="Label" parent="CanvasLayer"]
+offset_left = 983.0
+offset_top = 639.0
+offset_right = 1295.0
+offset_bottom = 673.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "SFX"
+
+[node name="Volume" type="TextureButton" parent="."]
+offset_left = 41.0
+offset_top = 546.0
+offset_right = 869.0
+offset_bottom = 690.0
+scale = Vector2(0.64, 0.64)
+toggle_mode = true
+texture_normal = ExtResource("11_mgjjt")
+texture_pressed = ExtResource("12_pqc76")
+texture_hover = ExtResource("13_ojj2c")
+
+[node name="Display" type="TextureButton" parent="."]
+offset_left = 12.0
+offset_top = 457.0
+offset_right = 840.0
+offset_bottom = 601.0
+scale = Vector2(0.64, 0.64)
+toggle_mode = true
+texture_normal = ExtResource("14_wxr1c")
+texture_pressed = ExtResource("15_eyu8e")
+texture_hover = ExtResource("16_kyubx")
+
+[node name="Save" type="TextureButton" parent="."]
+offset_left = 1589.0
+offset_top = 823.0
+offset_right = 2417.0
+offset_bottom = 967.0
+scale = Vector2(0.4, 0.4)
+texture_normal = ExtResource("17_j18tl")
+texture_hover = ExtResource("18_gc10f")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Resolution" type="Label" parent="CanvasLayer2"]
+offset_left = 870.0
+offset_top = 389.0
+offset_right = 1182.0
+offset_bottom = 423.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "RESOLUTION"
+
+[node name="Screen" type="Label" parent="CanvasLayer2"]
+offset_left = 921.0
+offset_top = 484.0
+offset_right = 1233.0
+offset_bottom = 518.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "SCREEN"
+
+[node name="VSYNC" type="Label" parent="CanvasLayer2"]
+offset_left = 928.0
+offset_top = 575.0
+offset_right = 1240.0
+offset_bottom = 609.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "VSYNC"
+
+[node name="FPS" type="Label" parent="CanvasLayer2"]
+offset_left = 956.0
+offset_top = 670.0
+offset_right = 1268.0
+offset_bottom = 704.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 36
+text = "FPS"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+visible = false
+offset_left = 1287.0
+offset_top = 391.0
+offset_right = 1687.0
+offset_bottom = 431.0
+theme_override_constants/separation = 249
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer2"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 0
+popup/item_1/text = "1600x900"
+popup/item_1/id = 1
+popup/item_2/text = "1280x720"
+popup/item_2/id = 2
+
+[node name="OptionButton2" type="OptionButton" parent="VBoxContainer2"]
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "144"
+popup/item_0/id = 0
+popup/item_1/text = "120"
+popup/item_1/id = 1
+popup/item_2/text = "90"
+popup/item_2/id = 2
+popup/item_3/text = "60"
+popup/item_3/id = 3
+
+[node name="CheckBox" type="CheckBox" parent="."]
+visible = false
+offset_left = 1290.0
+offset_top = 489.0
+offset_right = 1420.0
+offset_bottom = 513.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 16
+text = "FULLSCREEN"
+
+[node name="CheckBox2" type="CheckBox" parent="."]
+visible = false
+offset_left = 1482.0
+offset_top = 489.0
+offset_right = 1612.0
+offset_bottom = 513.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 16
+text = "WINDOW"
+
+[node name="CheckBox3" type="CheckBox" parent="."]
+visible = false
+offset_left = 1290.0
+offset_top = 580.0
+offset_right = 1420.0
+offset_bottom = 604.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 16
+text = "ON"
+
+[node name="CheckBox4" type="CheckBox" parent="."]
+visible = false
+offset_left = 1482.0
+offset_top = 580.0
+offset_right = 1612.0
+offset_bottom = 604.0
+theme_override_fonts/font = ExtResource("10_ywsft")
+theme_override_font_sizes/font_size = 16
+text = "OFF"
+
+[node name="Gate1" type="Sprite2D" parent="."]
+position = Vector2(960, 542)
+texture = ExtResource("19_mgjjt")
+
+[node name="Gate2" type="Sprite2D" parent="."]
+position = Vector2(960, 539.105)
+texture = ExtResource("20_pqc76")
+
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
+[connection signal="toggled" from="Volume" to="." method="_on_volume_toggled"]
+[connection signal="toggled" from="Display" to="." method="_on_display_toggled"]
+[connection signal="pressed" from="Save" to="." method="_on_save_pressed"]

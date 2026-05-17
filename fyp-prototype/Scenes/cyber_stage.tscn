@@ -1,0 +1,103 @@
+[gd_scene load_steps=9 format=3 uid="uid://tm4w6mqtoly8"]
+
+[ext_resource type="Script" uid="uid://1xahuse7sqqf" path="res://Scenes/cyber_stage.gd" id="1_tmo1s"]
+[ext_resource type="Shader" uid="uid://dnp47ovmi8aw4" path="res://cybersky.gdshader" id="2_qwtnr"]
+[ext_resource type="PackedScene" uid="uid://2hvmwet7jf82" path="res://Scenes/level_generator.tscn" id="3_5oqu1"]
+[ext_resource type="AudioStream" uid="uid://cu7wvd7ar03nj" path="res://Sound/Horizon Final OST.mp3" id="4_wmgwe"]
+[ext_resource type="AudioStream" uid="uid://b4sqln7lut0f" path="res://Sound/Horizon OST.mp3" id="5_o58ah"]
+[ext_resource type="Script" uid="uid://bolnpqok7p1ks" path="res://Scripts/mouse_look_router.gd" id="6_aleys"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vvf3k"]
+render_priority = 0
+shader = ExtResource("2_qwtnr")
+shader_parameter/bg_color = Color(0.01, 0.01, 0.05, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 20.0
+shader_parameter/line_thickness = 6.73
+shader_parameter/glow_strength = 2.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_y1k2l"]
+material = SubResource("ShaderMaterial_vvf3k")
+flip_faces = true
+
+[node name="cyber_stage" type="Node3D"]
+script = ExtResource("1_tmo1s")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.22941265, -0.23553386, 0.94440126, -0.1698381, -0.9650808, -0.19943452, 0.95839703, -0.11464245, -0.26140413, 18.332708, 133.49991, 0)
+light_color = Color(0.7344887, 0.6792639, 0.69719094, 1)
+light_energy = 1.7
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(4000, 0, 0, 0, 3000, 0, 0, 0, 4000, -0.017102242, 0.017089844, -0.00026607513)
+mesh = SubResource("BoxMesh_y1k2l")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1907.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.152941)
+
+[node name="LevelGenerator" parent="." instance=ExtResource("3_5oqu1")]
+
+[node name="Final_Checkpoint" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("4_wmgwe")
+parameters/looping = true
+
+[node name="Stage_OST" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("5_o58ah")
+parameters/looping = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = 736.0
+offset_top = 323.0
+offset_right = 1191.0
+offset_bottom = 693.0
+color = Color(0.529067, 0.529067, 0.529067, 0.337255)
+
+[node name="Resume" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -109.0
+offset_top = -84.0
+offset_right = 113.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 41
+text = "Resume"
+
+[node name="Quit" type="Button" parent="CanvasLayer"]
+offset_left = 883.0
+offset_top = 551.0
+offset_right = 1040.0
+offset_bottom = 616.0
+theme_override_font_sizes/font_size = 41
+text = "Quit"
+
+[node name="Pause Menu" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -151.0
+offset_top = -191.0
+offset_right = 151.0
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 51
+text = "Pause Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MouseLookRouter" type="Node3D" parent="."]
+script = ExtResource("6_aleys")
