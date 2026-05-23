@@ -6,7 +6,7 @@ var selection_mode := ""
 var single = true
 
 func _ready() -> void:
-	await get_tree().process_frame
+	LevelOptions.mult = false
 	open()
 	$Panel.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -98,6 +98,7 @@ func main_menu():
 	$custom.button_pressed = false
 	$Stage_panel.texture = $Questionmark.get_texture()
 	single = false
+	LevelOptions.mult = false
 	
 func _on_random_seed_toggled(pressed) -> void:
 	if pressed:

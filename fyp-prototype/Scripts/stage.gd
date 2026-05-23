@@ -15,7 +15,9 @@ func _ready():
 		current_checkpoint_p2 = p2.global_transform
 		print(p2.global_position)
 	print(p1.global_position)
-	respawn()
+	respawn("p1")
+	if LevelOptions.mult:
+		respawn("p2")
 	$Stage_OST.play()
 	resume()
 
@@ -32,10 +34,10 @@ func _physics_process(delta: float) -> void:
 		$Stage_OST.stop()
 		$Final_Checkpoint.play()
 	if p1 and p1.global_position.y <= 300:
-		respawn()
+		respawn("p1")
 
 	if p2 and LevelOptions.mult and p2.global_position.y <= 300:
-		respawn()
+		respawn("p2")
 		
 func pause_menu():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -65,11 +67,11 @@ func _on_checkpoint_reached():
 	final_checkpoint = true
 	print("checkpoint")
 
-func respawn():
-	if p1:
+func respawn(player):
+	if player == "p1":
 		p1.global_transform = current_checkpoint_p1
 
-	if p2 and LevelOptions.mult:
+	if player == "p2":
 		p2.global_transform = current_checkpoint_p2
 		
 func set_checkpoint(pos):
