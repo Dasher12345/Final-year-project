@@ -46,6 +46,8 @@ extends CharacterBody3D
 @export var wall_run_duration := 1.0
 @export var wall_run_cooldown := 0.2
 
+@export var wall_run_boost := 10.0
+
 @export var wall_detect_distance := 1.0
 @export var wall_ray_height := 1.0
 
@@ -84,7 +86,6 @@ var dash_saved_y := 0.0
 var was_on_floor := false
 
 var is_wall_running := false
-var wall_run_timer := 0.0
 var wall_run_cooldown_timer := 0.0
 var wall_normal := Vector3.ZERO
 
@@ -101,6 +102,7 @@ func _ready() -> void:
 	
 	$AnimationPlayer.get_animation("Wall_Running_left").loop_mode = Animation.LOOP_LINEAR
 	$AnimationPlayer.get_animation("Wall_Running_right").loop_mode = Animation.LOOP_LINEAR
+	$AnimationPlayer.get_animation("Falling").loop_mode = Animation.LOOP_LINEAR
 	
 	if player_id == 2:
 		model_mesh.set_surface_override_material(0, material_p2.duplicate())
@@ -138,7 +140,13 @@ func _physics_process(delta: float) -> void:
 		$AnimationPlayer.seek(0.3, true)
 		
 		has_Jumped = false
-
+	
+	elif not on_floor_now and was_on_floor and not has_Jumped:
+		# Player simply ran off the platform without jumping
+		if $AnimationPlayer.current_animation != "Running_to_Falling" and $AnimationPlayer.current_animation != "Falling":
+			$AnimationPlayer.play("Running_to_Falling")
+			$AnimationPlayer.queue("Falling")
+	
 	was_on_floor = on_floor_now
 
 	# --- Cooldowns ---
@@ -326,7 +334,14 @@ func _physics_process(delta: float) -> void:
 			$AnimationPlayer.get_animation("Falling").loop = true
 			$AnimationPlayer.queue("Falling")
 			jumps_left -= 1
-	
+			
+		# If player did the first running jump, starts falling, and has not double-jumped
+	if not on_floor_now and velocity.y < 0.0 and has_Jumped and jumps_left == max_jumps - 1:
+		if $AnimationPlayer.current_animation == "Running_Jump" and $AnimationPlayer.current_animation_position >= $AnimationPlayer.current_animation_length - 0.05:
+			$AnimationPlayer.play("RunningJump_to_Falling")
+			$AnimationPlayer.queue("Falling")
+
+
 	# =====================
 	# Right Stick Camera
 	# =====================
@@ -430,7 +445,6 @@ func try_start_wall_run(cam_right: Vector3) -> bool:
 
 func begin_wall_run(hit_normal: Vector3) -> void:
 	is_wall_running = true
-	wall_run_timer = wall_run_duration
 	wall_normal = hit_normal.normalized()
 	
 	# Determine which side the wall is on (relative to camera)
@@ -451,30 +465,24 @@ func begin_wall_run(hit_normal: Vector3) -> void:
 		velocity.y = -wall_run_max_fall_speed
 
 func update_wall_run(delta: float, cam_forward: Vector3, wants_forward: bool) -> void:
-	wall_run_timer -= delta
-
 	if is_on_floor():
 		end_wall_run()
 		return
-
-	if wall_run_timer <= 0.0:
-		end_wall_run()
-		return
-
+	
 	if not wants_forward:
 		end_wall_run()
 		return
-
+	
 	var cam_right := cam_pivot.global_transform.basis.x
 	cam_right.y = 0.0
 	if cam_right.length() > 0.001:
 		cam_right = cam_right.normalized()
-
+	
 	var origin := global_transform.origin + Vector3.UP * wall_ray_height
-
+	
 	var left_hit := raycast_wall(origin, -cam_right)
 	var right_hit := raycast_wall(origin, cam_right)
-
+	
 	var still_on_wall := false
 	if left_hit.has("normal"):
 		wall_normal = (left_hit["normal"] as Vector3).normalized()
@@ -482,30 +490,34 @@ func update_wall_run(delta: float, cam_forward: Vector3, wants_forward: bool) ->
 	if right_hit.has("normal"):
 		wall_normal = (right_hit["normal"] as Vector3).normalized()
 		still_on_wall = true
-
+	
 	if not still_on_wall:
 		end_wall_run()
 		return
-
+	
 	var along := cam_forward - wall_normal * cam_forward.dot(wall_normal)
 	if along.length() < 0.001:
 		end_wall_run()
 		return
 	along = along.normalized()
 
-	velocity.x = along.x * wall_run_speed
-	velocity.z = along.z * wall_run_speed
-
+	var boosted_wall_run_speed := wall_run_speed + wall_run_boost
+	
+	#velocity.x = along.x * wall_run_speed
+	#velocity.z = along.z * wall_run_speed
+	velocity.x = along.x * boosted_wall_run_speed
+	velocity.z = along.z * boosted_wall_run_speed
+	
 	var wall_grav := gravity_strength * wall_run_gravity_scale
 	velocity.y -= wall_grav * delta
-
+	
 	if velocity.y < -wall_run_max_fall_speed:
 		velocity.y = -wall_run_max_fall_speed
-
+	
 	velocity += -wall_normal * wall_stick_force * delta
 
 func do_wall_jump(cam_forward: Vector3) -> void:
-	end_wall_run()
+	end_wall_run(false)
 
 	var push := wall_normal * wall_jump_push
 	var up := Vector3.UP * wall_jump_up
@@ -528,11 +540,14 @@ func do_wall_jump(cam_forward: Vector3) -> void:
 	debug_override_timer = 0.25
 	_update_label("WALL JUMP")
 
-func end_wall_run() -> void:
+func end_wall_run(play_falling_anim: bool = true) -> void:
 	if is_wall_running:
 		is_wall_running = false
-		wall_run_timer = 0.0
 		wall_run_cooldown_timer = wall_run_cooldown
+		
+		if play_falling_anim and not is_on_floor():
+			play_anim("Falling")
+
 
 func raycast_wall(origin: Vector3, dir: Vector3) -> Dictionary:
 	var space := get_world_3d().direct_space_state
