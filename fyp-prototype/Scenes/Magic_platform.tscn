@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://jbnapw0ohjf7"]
+
+[ext_resource type="PackedScene" uid="uid://dyln2kpdgte2y" path="res://assets/models/magic_circle.glb" id="1_4i2sn"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_4i2sn")]
+
+[node name="Sketchfab_model" parent="." index="0"]
+transform = Transform3D(0.345, 0, 0, 0, -1.508043e-08, 0.345, 0, -0.345, -1.508043e-08, -0.51018965, 0, 0.48397553)

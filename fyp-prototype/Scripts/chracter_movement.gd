@@ -3,7 +3,13 @@ extends CharacterBody3D
 @onready var label: Label = $"../Label"
 
 
+const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
+
 @onready var model_mesh: MeshInstance3D = $Armature/Skeleton3D/Model
+
+@onready var speed_lines_rect: ColorRect = $Speedlnes/ColorRect
+@onready var speed_lines_material: ShaderMaterial = $Speedlnes/ColorRect.material as ShaderMaterial
+
 @export var material_p2: Material
 
 @export var player_id = 1
@@ -107,7 +113,14 @@ func _ready() -> void:
 	if player_id == 2:
 		model_mesh.set_surface_override_material(0, material_p2.duplicate())
 	_update_label("READY")
-	
+
+	speed_lines_rect.visible = false
+	speed_lines_rect.modulate.a = 0.0
+	if speed_lines_material:
+		speed_lines_material = speed_lines_material.duplicate()
+		speed_lines_rect.material = speed_lines_material
+		speed_lines_material.set_shader_parameter("line_density", 0.27)
+		speed_lines_material.set_shader_parameter("line_falloff", 0.56)
 
 
 func _input(event: InputEvent) -> void:
@@ -208,6 +221,10 @@ func _physics_process(delta: float) -> void:
 
 		if dash_timer <= 0.0:
 			is_dashing = false
+			
+			if speed_lines_material:
+				speed_lines_material.set_shader_parameter("line_density", 0.27)
+				speed_lines_material.set_shader_parameter("line_falloff", 0.56)
 
 	else:
 		# =====================
@@ -328,6 +345,8 @@ func _physics_process(delta: float) -> void:
 			$AnimationPlayer.seek(0.3, true)
 			has_Jumped = true
 		elif jumps_left == 0:
+			spawn_magic_platform()
+			
 			$AnimationPlayer.play("Forward_Flip")
 			$AnimationPlayer.seek(0.3,true)
 			$AnimationPlayer.queue("Flip_to_Falling3")
@@ -365,6 +384,15 @@ func _physics_process(delta: float) -> void:
 	look_x = clamp(look_x, -1.2, 1.2)
 	cam_pivot.rotation.x = look_x
 
+	var speed_ratio = clamp(Vector3(velocity.x, 0, velocity.z).length() / move_speed, 0.0, 1.0)
+	
+	if speed_ratio < 0.5:
+		speed_lines_rect.visible = false
+		speed_lines_rect.modulate.a = 0.0
+	else:
+		speed_lines_rect.visible = true
+		speed_lines_rect.modulate.a = speed_ratio
+	
 	move_and_slide()
 
 # =====================
@@ -405,6 +433,10 @@ func start_dash(direction: Vector3) -> void:
 
 	dash_direction = dir.normalized()
 	dash_saved_y = velocity.y
+
+	if speed_lines_material:
+		speed_lines_material.set_shader_parameter("line_density", 0.44)
+		speed_lines_material.set_shader_parameter("line_falloff", 1.0)
 
 # =====================
 # Wall run helpers
@@ -559,6 +591,19 @@ func raycast_wall(origin: Vector3, dir: Vector3) -> Dictionary:
 	query.exclude = [self]
 
 	return space.intersect_ray(query)
+
+
+
+func spawn_magic_platform() -> void:
+	var magic_platform = MAGIC_PLATFORM.instantiate()
+	get_tree().current_scene.add_child(magic_platform)
+	magic_platform.global_position = global_position
+	
+	await get_tree().create_timer(1.3).timeout
+	
+	if is_instance_valid(magic_platform):
+		magic_platform.queue_free()
+
 
 
 # =====================
