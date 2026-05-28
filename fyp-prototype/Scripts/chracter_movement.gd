@@ -5,6 +5,8 @@ extends CharacterBody3D
 
 const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
 
+@onready var dash_sound: AudioStreamPlayer3D = $DashSound
+
 @onready var model_mesh: MeshInstance3D = $Armature/Skeleton3D/Model
 
 @onready var speed_lines_rect: ColorRect = $Speedlnes/ColorRect
@@ -35,6 +37,8 @@ const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
 # =====================
 # Dash tuning
 # =====================
+@export var dash_in_camera_direction := true
+
 @export var dash_speed := 80.0
 @export var dash_duration := 0.15
 @export var dash_cooldown := 0.8
@@ -49,7 +53,7 @@ const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
 # Wall run tuning (Titanfall/BO3-ish)
 # =====================
 @export var wall_run_speed := 65.0
-@export var wall_run_duration := 1.0
+#@export var wall_run_duration := 1.0
 @export var wall_run_cooldown := 0.2
 
 @export var wall_run_boost := 10.0
@@ -95,7 +99,6 @@ var is_wall_running := false
 var wall_run_cooldown_timer := 0.0
 var wall_normal := Vector3.ZERO
 
-var is_playing_jump_anim := false
 
 @onready var cam_pivot: Node3D = $SprintArmPivot
 var look_x := 0.0
@@ -149,7 +152,7 @@ func _physics_process(delta: float) -> void:
 	if on_floor_now and not was_on_floor:
 		jumps_left = max_jumps
 		dashes_left = max_dashes
-		$AnimationPlayer.play("Landing")
+		play_anim("Landing")
 		$AnimationPlayer.seek(0.3, true)
 		
 		has_Jumped = false
@@ -157,7 +160,7 @@ func _physics_process(delta: float) -> void:
 	elif not on_floor_now and was_on_floor and not has_Jumped:
 		# Player simply ran off the platform without jumping
 		if $AnimationPlayer.current_animation != "Running_to_Falling" and $AnimationPlayer.current_animation != "Falling":
-			$AnimationPlayer.play("Running_to_Falling")
+			play_anim("Running_to_Falling")
 			$AnimationPlayer.queue("Falling")
 	
 	was_on_floor = on_floor_now
@@ -238,8 +241,7 @@ func _physics_process(delta: float) -> void:
 				var found_wall := try_start_wall_run(cam_right)
 				if found_wall:
 					_update_label("WALL RUN", on_floor_now)
-					move_and_slide()
-					return
+
 
 		# =====================
 		# Gravity (normal)
@@ -301,8 +303,6 @@ func _physics_process(delta: float) -> void:
 		# =====================
 		
 	if on_floor_now:
-		#var vertical_movement := ((velocity.y) != 0)
-		
 		var hspeed := Vector3(velocity.x, 0, velocity.z).length()
 		# no input and no movement
 		if not is_moving_input and hspeed < 0.1 and is_on_floor() and not $AnimationPlayer.is_playing():
@@ -337,27 +337,25 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed(action("jump")):
 		if not has_Jumped and Input.is_action_pressed(action("forward")):
-			$AnimationPlayer.play("Running_Jump")
+			play_anim("Running_Jump")
 			has_Jumped = true
 		elif not has_Jumped:
-			#is_playing_jump_anim = true
-			$AnimationPlayer.play("Jumping")
+			play_anim("Jumping")
 			$AnimationPlayer.seek(0.3, true)
 			has_Jumped = true
 		elif jumps_left == 0:
 			spawn_magic_platform()
 			
-			$AnimationPlayer.play("Forward_Flip")
+			play_anim("Forward_Flip")
 			$AnimationPlayer.seek(0.3,true)
 			$AnimationPlayer.queue("Flip_to_Falling3")
-			$AnimationPlayer.get_animation("Falling").loop = true
 			$AnimationPlayer.queue("Falling")
 			jumps_left -= 1
 			
 		# If player did the first running jump, starts falling, and has not double-jumped
 	if not on_floor_now and velocity.y < 0.0 and has_Jumped and jumps_left == max_jumps - 1:
 		if $AnimationPlayer.current_animation == "Running_Jump" and $AnimationPlayer.current_animation_position >= $AnimationPlayer.current_animation_length - 0.05:
-			$AnimationPlayer.play("RunningJump_to_Falling")
+			play_anim("RunningJump_to_Falling")
 			$AnimationPlayer.queue("Falling")
 
 
@@ -423,17 +421,23 @@ func _update_label(state_text: String, on_floor_now: bool = false) -> void:
 # =====================
 func start_dash(direction: Vector3) -> void:
 	var dir := direction
-	if dir == Vector3.ZERO:
+	
+	if dash_in_camera_direction:
 		dir = -cam_pivot.global_transform.basis.z
-
+	
+	elif dir == Vector3.ZERO:
+		dir = -cam_pivot.global_transform.basis.z
+	
 	is_dashing = true
 	dash_timer = dash_duration
 	dash_cooldown_timer = dash_cooldown
 	dashes_left -= 1
-
+	
 	dash_direction = dir.normalized()
 	dash_saved_y = velocity.y
-
+	
+	dash_sound.play()
+	
 	if speed_lines_material:
 		speed_lines_material.set_shader_parameter("line_density", 0.44)
 		speed_lines_material.set_shader_parameter("line_falloff", 1.0)
@@ -489,9 +493,9 @@ func begin_wall_run(hit_normal: Vector3) -> void:
 	var side := cam_right.dot(wall_normal)
 	
 	if side > 0.0:
-		$AnimationPlayer.play("Wall_Running_left")
+		play_anim("Wall_Running_left")
 	else:
-		$AnimationPlayer.play("Wall_Running_right")
+		play_anim("Wall_Running_right")
 	
 	if velocity.y < -wall_run_max_fall_speed:
 		velocity.y = -wall_run_max_fall_speed
@@ -564,7 +568,7 @@ func do_wall_jump(cam_forward: Vector3) -> void:
 	jumps_left = max_jumps - 1
 	has_Jumped = true
 
-	$AnimationPlayer.play("Jumping")
+	play_anim("Jumping")
 	$AnimationPlayer.seek(0.3, true)
 
 	# Label flash
@@ -599,7 +603,16 @@ func spawn_magic_platform() -> void:
 	get_tree().current_scene.add_child(magic_platform)
 	magic_platform.global_position = global_position
 	
-	await get_tree().create_timer(1.3).timeout
+	await get_tree().create_timer(0.3).timeout
+	
+	for mesh in magic_platform.find_children("*", "MeshInstance3D", true, false):
+		var mat := mesh.get_active_material(0).duplicate() as StandardMaterial3D
+		mesh.set_surface_override_material(0, mat)
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		
+		var tween := get_tree().create_tween()
+		tween.tween_property(mat, "albedo_color:a", 0.0, 0.5)
+		await tween.finished
 	
 	if is_instance_valid(magic_platform):
 		magic_platform.queue_free()
