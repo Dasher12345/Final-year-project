@@ -1,11 +1,13 @@
-[gd_scene load_steps=39 format=4 uid="uid://ca22k8ofvbl48"]
+[gd_scene load_steps=41 format=4 uid="uid://ca22k8ofvbl48"]
 
 [ext_resource type="Material" uid="uid://ldv0rrxm5ys0" path="res://assets/models/Character/material.tres" id="1_51goo"]
 [ext_resource type="Script" uid="uid://dn6c0gji6ubje" path="res://Scripts/chracter_movement.gd" id="1_cthqt"]
 [ext_resource type="Material" uid="uid://brwkglch7rr7y" path="res://assets/models/Character/material2.tres" id="2_6mene"]
 [ext_resource type="Shader" uid="uid://c5s3h3avua4j" path="res://assets/Shader/speed_lines.gdshader" id="4_ac5rt"]
 [ext_resource type="Script" uid="uid://ou4i4376p7ds" path="res://Scripts/camera_effects.gd" id="4_pwh3q"]
-[ext_resource type="AudioStream" uid="uid://do0pvpuv664bo" path="res://assets/SFX/Dash.mp3" id="6_dn4h8"]
+[ext_resource type="AudioStream" uid="uid://dg3ntvfe01vjg" path="res://assets/SFX/Dash_old.mp3" id="6_j3t1n"]
+[ext_resource type="AudioStream" uid="uid://r5aqd1jdemtk" path="res://assets/SFX/Jump SFX.mp3" id="7_dkglb"]
+[ext_resource type="AudioStream" uid="uid://dvct5xl8bxtfl" path="res://assets/SFX/Double Jump SFX.wav" id="8_j3t1n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cthqt"]
 radius = 0.46044922
@@ -24133,6 +24135,13 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="DashSound" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("6_dn4h8")
+stream = ExtResource("6_j3t1n")
+
+[node name="JumpSound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_dkglb")
+
+[node name="DoubleJump_Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_j3t1n")
+pitch_scale = 2.42
 
 [connection signal="timeout" from="Coyote_Timer" to="." method="_on_coyote_timer_timeout"]

@@ -6,6 +6,8 @@ extends CharacterBody3D
 const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
 
 @onready var dash_sound: AudioStreamPlayer3D = $DashSound
+@onready var jump_sound: AudioStreamPlayer3D = $JumpSound
+@onready var double_jump_sound: AudioStreamPlayer3D = $DoubleJump_Sound
 
 @onready var model_mesh: MeshInstance3D = $Armature/Skeleton3D/Model
 
@@ -115,7 +117,7 @@ func _ready() -> void:
 	
 	if player_id == 2:
 		model_mesh.set_surface_override_material(0, material_p2.duplicate())
-	_update_label("READY")
+
 
 	speed_lines_rect.visible = false
 	speed_lines_rect.modulate.a = 0.0
@@ -205,7 +207,6 @@ func _physics_process(delta: float) -> void:
 	# Dash active
 	# =====================
 	if is_dashing:
-		_update_label("DASH", on_floor_now)
 		dash_timer -= delta
 
 		var target_dash_speed := dash_speed
@@ -234,13 +235,11 @@ func _physics_process(delta: float) -> void:
 		# Wall run update / start
 		# =====================
 		if is_wall_running:
-			_update_label("WALL RUN", on_floor_now)
 			update_wall_run(delta, cam_forward, wants_forward)
 		else:
 			if (not on_floor_now) and wants_forward and wall_run_cooldown_timer <= 0.0:
 				var found_wall := try_start_wall_run(cam_right)
-				if found_wall:
-					_update_label("WALL RUN", on_floor_now)
+
 
 
 		# =====================
@@ -287,16 +286,6 @@ func _physics_process(delta: float) -> void:
 		# =====================
 		if (not is_wall_running) and Input.is_action_just_pressed(action("dash")) and dashes_left > 0 and dash_cooldown_timer <= 0.0:
 			start_dash(move_dir)
-			_update_label("DASH", on_floor_now)
-
-		# =====================
-		# Default label when not dashing/wall-running
-		# =====================
-		if not is_wall_running:
-			if on_floor_now:
-				_update_label("GROUND", on_floor_now)
-			else:
-				_update_label("AIR", on_floor_now)
 
 		# =====================
 		# Ground animations
@@ -338,16 +327,19 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed(action("jump")):
 		if not has_Jumped and Input.is_action_pressed(action("forward")):
 			play_anim("Running_Jump")
+			jump_sound.play()
 			has_Jumped = true
+		
 		elif not has_Jumped:
 			play_anim("Jumping")
 			$AnimationPlayer.seek(0.3, true)
+			jump_sound.play()
 			has_Jumped = true
 		elif jumps_left == 0:
 			spawn_magic_platform()
-			
 			play_anim("Forward_Flip")
 			$AnimationPlayer.seek(0.3,true)
+			double_jump_sound.play()
 			$AnimationPlayer.queue("Flip_to_Falling3")
 			$AnimationPlayer.queue("Falling")
 			jumps_left -= 1
@@ -392,29 +384,6 @@ func _physics_process(delta: float) -> void:
 		speed_lines_rect.modulate.a = speed_ratio
 	
 	move_and_slide()
-
-# =====================
-# Label helper
-# =====================
-func _update_label(state_text: String, on_floor_now: bool = false) -> void:
-	if not show_debug_label:
-		return
-	if label == null:
-		return
-
-	var text := state_text
-
-	# temporary override (e.g., WALL JUMP)
-	if debug_override_text != "" and debug_override_timer > 0.0:
-		text = debug_override_text
-
-	if show_speed_in_label:
-		var hspeed := Vector3(velocity.x, 0, velocity.z).length()
-		text += " | h: " + str(snappedf(hspeed, 0.01))
-		text += " | J: " + str(jumps_left) + "/" + str(max_jumps)
-		text += " | D: " + str(dashes_left) + "/" + str(max_dashes)
-
-	label.text = text
 
 # =====================
 # Dash helper
@@ -569,12 +538,12 @@ func do_wall_jump(cam_forward: Vector3) -> void:
 	has_Jumped = true
 
 	play_anim("Jumping")
+	jump_sound.play()
 	$AnimationPlayer.seek(0.3, true)
 
 	# Label flash
 	debug_override_text = "WALL JUMP"
 	debug_override_timer = 0.25
-	_update_label("WALL JUMP")
 
 func end_wall_run(play_falling_anim: bool = true) -> void:
 	if is_wall_running:
