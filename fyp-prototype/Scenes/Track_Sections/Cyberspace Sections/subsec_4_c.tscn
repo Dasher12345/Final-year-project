@@ -1,31 +1,34 @@
-[gd_scene load_steps=6 format=3 uid="uid://c84kbjojd5ncy"]
+[gd_scene load_steps=6 format=3 uid="uid://dvmpsq6xrx86k"]
 
-[ext_resource type="Script" uid="uid://c0feck1niw1qd" path="res://Scripts/moving_platform.gd" id="1_oqaf6"]
-[ext_resource type="Texture2D" uid="uid://c88j3oj0lf6om" path="res://assets/textures/rock023_alb_ht.png" id="2_do35b"]
+[ext_resource type="Script" uid="uid://c0feck1niw1qd" path="res://Scripts/moving_platform.gd" id="1_24rbx"]
+[ext_resource type="Shader" uid="uid://do7wtlsnk55fu" path="res://Scenes/platform_cyber.gdshader" id="2_lsxq2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fsb5q"]
-albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
-albedo_texture = ExtResource("2_do35b")
-uv1_scale = Vector3(-0.4, 4, 1)
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6a6rr"]
+render_priority = 0
+shader = ExtResource("2_lsxq2")
+shader_parameter/bg_color = Color(0.01, 0.02, 0.05, 1)
+shader_parameter/line_color = Color(0.5149705, 0.17100582, 0.14116496, 1)
+shader_parameter/grid_scale = 12.04
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_do35b"]
-material = SubResource("StandardMaterial3D_fsb5q")
+[sub_resource type="BoxMesh" id="BoxMesh_h1i87"]
+material = SubResource("ShaderMaterial_6a6rr")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fsb5q"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_rs1pd"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[node name="subsec4_h" type="Node3D"]
-script = ExtResource("1_oqaf6")
+[node name="subsec_4_c" type="Node3D"]
+script = ExtResource("1_24rbx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.845056, 0, 0, 0, 0.89611554, 0, 0, 0, 15.714619, 0, 0, 16.126019)
-mesh = SubResource("BoxMesh_do35b")
+mesh = SubResource("BoxMesh_h1i87")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_fsb5q")
+shape = SubResource("ConcavePolygonShape3D_rs1pd")
 
 [node name="end" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 24.011)

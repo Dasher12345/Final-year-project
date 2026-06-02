@@ -1,0 +1,90 @@
+[gd_scene load_steps=12 format=3 uid="uid://tovj3jlm4fxg"]
+
+[ext_resource type="PackedScene" uid="uid://bqbojpw6ulwks" path="res://Scenes/cyber_screen.tscn" id="1_37uq0"]
+[ext_resource type="Script" uid="uid://x5267ghipgq2" path="res://Scenes/result.gd" id="1_dj5nj"]
+[ext_resource type="PackedScene" uid="uid://bmhe6r8lskx7b" path="res://Scripts/horizon_screen.tscn" id="2_dj5nj"]
+[ext_resource type="PackedScene" uid="uid://c735t0qcav4vi" path="res://apocolypse_screen.tscn" id="3_knq36"]
+[ext_resource type="Texture2D" uid="uid://cinw5wxcdpn3v" path="res://assets/images/result.png" id="5_2r854"]
+[ext_resource type="Texture2D" uid="uid://828vjvje6utn" path="res://assets/Buttons/Retry.png" id="6_ym087"]
+[ext_resource type="Texture2D" uid="uid://c25i73bhlh4fq" path="res://assets/Buttons/Retry_pressed.png" id="7_wt2fb"]
+[ext_resource type="Texture2D" uid="uid://8n2ugimcxlh3" path="res://assets/Buttons/Main.png" id="8_ydgqw"]
+[ext_resource type="Texture2D" uid="uid://ddcbkge42rc0e" path="res://assets/Buttons/Main_pressed.png" id="9_4x37f"]
+[ext_resource type="FontFile" uid="uid://bm81gd1j2gelh" path="res://assets/fonts/Mont-HeavyDEMO.otf" id="10_whfkv"]
+[ext_resource type="AudioStream" uid="uid://blfwevek5golx" path="res://Sound/Result Screen.mp3" id="11_ym087"]
+
+[node name="Result" type="Node3D"]
+script = ExtResource("1_dj5nj")
+
+[node name="Cyber" parent="." instance=ExtResource("1_37uq0")]
+
+[node name="Node3D" parent="." instance=ExtResource("2_dj5nj")]
+
+[node name="Node3D2" parent="." instance=ExtResource("3_knq36")]
+
+[node name="Result" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("5_2r854")
+
+[node name="Retry" type="TextureButton" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -543.0
+offset_top = 800.0
+offset_right = 285.0
+offset_bottom = 944.0
+grow_horizontal = 2
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("6_ym087")
+texture_hover = ExtResource("7_wt2fb")
+
+[node name="Back" type="TextureButton" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 52.640015
+offset_top = 800.0
+offset_right = 880.64026
+offset_bottom = 944.0
+grow_horizontal = 2
+scale = Vector2(0.6, 0.6)
+texture_normal = ExtResource("8_ydgqw")
+texture_hover = ExtResource("9_4x37f")
+
+[node name="Seed" type="Label" parent="."]
+offset_left = 772.0
+offset_top = 389.0
+offset_right = 941.0
+offset_bottom = 440.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("10_whfkv")
+theme_override_font_sizes/font_size = 56
+text = "SEED: "
+
+[node name="Time" type="Label" parent="."]
+offset_left = 602.0
+offset_top = 529.0
+offset_right = 929.0
+offset_bottom = 580.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("10_whfkv")
+theme_override_font_sizes/font_size = 56
+text = "YOUR TIME:"
+
+[node name="Best" type="Label" parent="."]
+offset_left = 628.0
+offset_top = 461.0
+offset_right = 941.0
+offset_bottom = 512.0
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("10_whfkv")
+theme_override_font_sizes/font_size = 56
+text = "BEST TIME: "
+
+[node name="OST" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ym087")
+volume_db = -10.0
+parameters/looping = true
+
+[connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

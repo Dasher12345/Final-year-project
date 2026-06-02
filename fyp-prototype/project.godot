@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 LevelOptions="*res://Scripts/level_options.gd"
 Signalbus="*res://Scripts/signalbus.gd"
+Statsmanager="*res://Scripts/statsmanager.gd"
 
 [display]
 

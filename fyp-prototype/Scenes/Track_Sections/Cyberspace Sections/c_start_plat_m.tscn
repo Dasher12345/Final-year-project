@@ -1,59 +1,66 @@
-[gd_scene load_steps=9 format=3 uid="uid://b6dntrf3qy8ir"]
+[gd_scene load_steps=9 format=3 uid="uid://cl8yg0oh4dy8s"]
 
-[ext_resource type="PackedScene" uid="uid://ca22k8ofvbl48" path="res://assets/models/Character/character_model_v3.tscn" id="1_tgtaa"]
-[ext_resource type="Texture2D" uid="uid://c88j3oj0lf6om" path="res://assets/textures/rock023_alb_ht.png" id="1_ybpue"]
+[ext_resource type="Shader" uid="uid://do7wtlsnk55fu" path="res://Scenes/platform_cyber.gdshader" id="1_hpc60"]
+[ext_resource type="PackedScene" uid="uid://ca22k8ofvbl48" path="res://assets/models/Character/character_model_v3.tscn" id="2_yxtu3"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3c1xp"]
-albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
-albedo_texture = ExtResource("1_ybpue")
-uv1_scale = Vector3(-0.4, 1, 1)
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jlfkd"]
+render_priority = 0
+shader = ExtResource("1_hpc60")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 19.355
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_ybpue"]
-material = SubResource("StandardMaterial3D_3c1xp")
+[sub_resource type="BoxMesh" id="BoxMesh_m1mqi"]
+material = SubResource("ShaderMaterial_jlfkd")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3c1xp"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dlrmn"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loqe1"]
-albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
-albedo_texture = ExtResource("1_ybpue")
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gt8vq"]
+render_priority = 0
+shader = ExtResource("1_hpc60")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 20.0
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="PrismMesh" id="PrismMesh_loqe1"]
-material = SubResource("StandardMaterial3D_loqe1")
+[sub_resource type="PrismMesh" id="PrismMesh_22nq0"]
+material = SubResource("ShaderMaterial_gt8vq")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_yntt4"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a25ik"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[node name="start_platform_m" type="Node3D"]
+[node name="c_start_plat_m" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(33.29949, 0, 0, 0, 0.89611554, 0, 0, 0, 63.402046, 0.044617653, 0, 40.167587)
-mesh = SubResource("BoxMesh_ybpue")
+mesh = SubResource("BoxMesh_m1mqi")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3c1xp")
+shape = SubResource("ConcavePolygonShape3D_dlrmn")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.80542, 0.77449006, 0, -27.156431, 0.45076397, 0, 0, 0, 63.402046, 8.283, 13.451, 40.168)
-mesh = SubResource("BoxMesh_ybpue")
+mesh = SubResource("BoxMesh_m1mqi")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3c1xp")
+shape = SubResource("ConcavePolygonShape3D_dlrmn")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.782189, -0.7748752, 0, 27.169931, 0.45010144, 0, 0, 0, 63.402046, -8.269, 13.444, 40.168)
-mesh = SubResource("BoxMesh_ybpue")
+mesh = SubResource("BoxMesh_m1mqi")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3c1xp")
+shape = SubResource("ConcavePolygonShape3D_dlrmn")
 
 [node name="end" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 71.786316)
@@ -70,12 +77,12 @@ spot_angle = 48.57555
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(33.491398, 0, 0, 0, 27.617926, 0, 0, 0, 1, 0, 13.436345, 7.9959583)
-mesh = SubResource("PrismMesh_loqe1")
+mesh = SubResource("PrismMesh_22nq0")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_yntt4")
+shape = SubResource("ConcavePolygonShape3D_a25ik")
 
 [node name="p1_spawn" type="Marker3D" parent="."]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 4.717942, 0, 14.939576)
@@ -100,7 +107,7 @@ handle_input_locally = false
 size = Vector2i(958, 1080)
 render_target_update_mode = 4
 
-[node name="P1" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_tgtaa")]
+[node name="P1" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_yxtu3")]
 transform = Transform3D(-1.0000004, 0, -8.7422805e-08, 0, 1, 0, 8.7422805e-08, 0, -1.0000004, 4.597, 0.51, 14.88)
 air_deaccel = 30.0
 
@@ -116,7 +123,7 @@ handle_input_locally = false
 size = Vector2i(958, 1080)
 render_target_update_mode = 4
 
-[node name="P2" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("1_tgtaa")]
+[node name="P2" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("2_yxtu3")]
 transform = Transform3D(-1.0000002, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1.0000002, -1.037725, 0.50975704, 14.880411)
 player_id = 2
 air_deaccel = 30.0

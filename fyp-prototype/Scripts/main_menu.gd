@@ -4,6 +4,7 @@ var stage = false
 var seed = false
 var selection_mode := ""
 var single = true
+var font = load("res://assets/fonts/Mont-HeavyDEMO.otf")
 
 func _ready() -> void:
 	LevelOptions.mult = false
@@ -96,6 +97,9 @@ func main_menu():
 	$Apocolypse.button_pressed = false
 	$Random_Seed.button_pressed = false
 	$custom.button_pressed = false
+	$Stats.button_pressed = false
+	$HBoxContainer.hide()
+	$StatsScroll.hide()
 	$Stage_panel.texture = $Questionmark.get_texture()
 	single = false
 	LevelOptions.mult = false
@@ -189,7 +193,6 @@ func _on_start_pressed() -> void:
 
 func _on_stage_toggled(button_pressed) -> void:
 	if button_pressed:
-		
 		$seed.button_pressed = false
 		$Stats.button_pressed = false
 		$Panel.show()
@@ -213,6 +216,12 @@ func _on_stats_toggled(button_pressed) -> void:
 		$Apocolypse.hide()
 		$CyberSpace.hide()
 		$Horizon.hide()
+		$HBoxContainer.show()
+		$StatsScroll.show()
+		populate_stats()
+	else:
+		$HBoxContainer.hide()
+		$StatsScroll.hide()
 
 func _on_apocolypse_toggled(pressed) -> void:
 	if pressed:
@@ -255,3 +264,30 @@ func open():
 	tween.set_parallel(true)
 	tween.tween_property($Gate1,"position:y",0,0.5)
 	tween.tween_property($Gate2,"position:y",1078,0.5)
+
+func populate_stats():
+	var container = $StatsScroll/ScrollContainer/VBoxContainer
+	for child in container.get_children():
+		child.queue_free()
+	container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var data = Statsmanager.data
+	for seed in data.keys():
+		var row = HBoxContainer.new()
+		row.add_theme_constant_override("separation", 500)
+		row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.custom_minimum_size.y = 40
+		var seed_label = Label.new()
+		var time_label = Label.new()
+		seed_label.add_theme_font_override("font", font)
+		time_label.add_theme_font_override("font", font)
+		seed_label.add_theme_font_size_override("font_size", 24)
+		time_label.add_theme_font_size_override("font_size", 24)
+		seed_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		time_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		seed_label.text = str(seed)
+		var best = data[seed].get("best", null)
+		time_label.text = str(best) if best != null else "---"
+		row.add_child(seed_label)
+		row.add_child(time_label)
+		container.add_child(row)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct1yigwd6vxdm"]
+[gd_scene load_steps=6 format=3 uid="uid://ct1yigwd6vxdm"]
 
 [ext_resource type="Script" uid="uid://cg1sfu58pbwv" path="res://Scenes/cyber_cube.gd" id="1_bluki"]
 [ext_resource type="Shader" uid="uid://k6gmedsq5gu" path="res://Scenes/cube_cyber.gdshader" id="1_ost5q"]
@@ -13,10 +13,20 @@ shader_parameter/line_thickness = 1.2
 shader_parameter/glow_strength = 2.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_7xdwh"]
+lightmap_size_hint = Vector2i(14, 21)
 material = SubResource("ShaderMaterial_a14dk")
 flip_faces = true
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ost5q"]
+data = PackedVector3Array(0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+
 [node name="Cyber Cube" type="MeshInstance3D"]
 transform = Transform3D(19.704222, 0, 0, 0, 19.704222, 0, 0, 0, 19.704222, 0, 0, 0)
+extra_cull_margin = 5.0
 mesh = SubResource("BoxMesh_7xdwh")
 script = ExtResource("1_bluki")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ost5q")

@@ -1,62 +1,69 @@
-[gd_scene load_steps=9 format=3 uid="uid://pqc45f4f2iky"]
+[gd_scene load_steps=9 format=3 uid="uid://co33trkpqwi73"]
 
-[ext_resource type="PackedScene" uid="uid://ca22k8ofvbl48" path="res://assets/models/Character/character_model_v3.tscn" id="1_3o2eg"]
-[ext_resource type="Texture2D" uid="uid://c88j3oj0lf6om" path="res://assets/textures/rock023_alb_ht.png" id="1_tj31a"]
+[ext_resource type="Shader" uid="uid://do7wtlsnk55fu" path="res://Scenes/platform_cyber.gdshader" id="1_u3rrs"]
+[ext_resource type="PackedScene" uid="uid://ca22k8ofvbl48" path="res://assets/models/Character/character_model_v3.tscn" id="2_ugw43"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_biqv3"]
-albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
-albedo_texture = ExtResource("1_tj31a")
-uv1_scale = Vector3(-0.4, 4, 1)
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_murhl"]
+render_priority = 0
+shader = ExtResource("1_u3rrs")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 19.355
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_a2mw0"]
-material = SubResource("StandardMaterial3D_biqv3")
+[sub_resource type="BoxMesh" id="BoxMesh_xy1pp"]
+material = SubResource("ShaderMaterial_murhl")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3o2eg"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3gvoq"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_30p78"]
-albedo_color = Color(0.6862745, 0.6862745, 0.6862745, 1)
-albedo_texture = ExtResource("1_tj31a")
-uv1_triplanar = true
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vm8i2"]
+render_priority = 0
+shader = ExtResource("1_u3rrs")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 20.0
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="PrismMesh" id="PrismMesh_3o2eg"]
-material = SubResource("StandardMaterial3D_30p78")
+[sub_resource type="PrismMesh" id="PrismMesh_td4o6"]
+material = SubResource("ShaderMaterial_vm8i2")
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_tj31a"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_3y5fx"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[node name="start_platform" type="Node3D"]
+[node name="c_start_plat" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(33.29949, 0, 0, 0, 0.89611554, 0, 0, 0, 63.402046, 0.044617653, 0, 40.167587)
-mesh = SubResource("BoxMesh_a2mw0")
+mesh = SubResource("BoxMesh_xy1pp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3o2eg")
+shape = SubResource("ConcavePolygonShape3D_3gvoq")
 
-[node name="P1" parent="." instance=ExtResource("1_3o2eg")]
+[node name="P1" parent="." instance=ExtResource("2_ugw43")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.4749124, 13.200525)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.80542, 0.77449006, 0, -27.156431, 0.45076397, 0, 0, 0, 63.402046, 8.283, 13.451, 40.168)
-mesh = SubResource("BoxMesh_a2mw0")
+mesh = SubResource("BoxMesh_xy1pp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3o2eg")
+shape = SubResource("ConcavePolygonShape3D_3gvoq")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(15.782189, -0.7748752, 0, 27.169931, 0.45010144, 0, 0, 0, 63.402046, -8.269, 13.444, 40.168)
-mesh = SubResource("BoxMesh_a2mw0")
+mesh = SubResource("BoxMesh_xy1pp")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_3o2eg")
+shape = SubResource("ConcavePolygonShape3D_3gvoq")
 
 [node name="end" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 71.786316)
@@ -73,9 +80,9 @@ spot_angle = 48.57555
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(33.491398, 0, 0, 0, 27.617926, 0, 0, 0, 1, 0, 13.436345, 7.9959583)
-mesh = SubResource("PrismMesh_3o2eg")
+mesh = SubResource("PrismMesh_td4o6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_tj31a")
+shape = SubResource("ConcavePolygonShape3D_3y5fx")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://cfxply1nitunx"]
+[gd_scene load_steps=62 format=3 uid="uid://cfxply1nitunx"]
 
 [ext_resource type="Script" uid="uid://caxvskhdk4jir" path="res://Scripts/main_menu.gd" id="1_1ehe0"]
 [ext_resource type="Texture2D" uid="uid://bwg0x1jhmfo8g" path="res://assets/images/neon-hex-textures-networking.jpg" id="2_m3bi6"]
@@ -55,6 +55,7 @@
 [ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="53_w71i6"]
 [ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="54_m8avj"]
 [ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="55_mldsx"]
+[ext_resource type="FontFile" uid="uid://bm81gd1j2gelh" path="res://assets/fonts/Mont-HeavyDEMO.otf" id="56_mldsx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bmhhk"]
 bg_color = Color(0.08627451, 0.08627451, 0.08627451, 0.5529412)
@@ -72,6 +73,8 @@ shader_parameter/shadow_strength = 0.625
 [sub_resource type="World3D" id="World3D_hovqx"]
 
 [sub_resource type="World3D" id="World3D_w71i6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mldsx"]
 
 [node name="Main_Menu" type="Node3D"]
 script = ExtResource("1_1ehe0")
@@ -318,12 +321,54 @@ theme_override_font_sizes/font_size = 100
 text = "Main Menu"
 
 [node name="Gate1" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(960, 542)
 texture = ExtResource("54_m8avj")
 
 [node name="Gate2" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(960, 539.105)
 texture = ExtResource("55_mldsx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+offset_left = 920.0
+offset_top = 313.0
+offset_right = 1668.0
+offset_bottom = 353.0
+theme_override_constants/separation = 444
+
+[node name="Seed" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("56_mldsx")
+theme_override_font_sizes/font_size = 40
+text = "SEED"
+
+[node name="Best Time" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("56_mldsx")
+theme_override_font_sizes/font_size = 40
+text = "BEST TIME"
+
+[node name="StatsScroll" type="Panel" parent="."]
+offset_left = 908.0
+offset_top = 375.0
+offset_right = 1681.0
+offset_bottom = 766.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_mldsx")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="StatsScroll"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="StatsScroll/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 44
 
 [connection signal="pressed" from="Single" to="." method="_on_single_pressed"]
 [connection signal="pressed" from="Multiplayer" to="." method="_on_multiplayer_pressed"]

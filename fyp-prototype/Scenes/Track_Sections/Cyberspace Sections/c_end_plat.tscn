@@ -1,93 +1,77 @@
-[gd_scene load_steps=7 format=3 uid="uid://djg4ueqqg4p5r"]
+[gd_scene load_steps=10 format=3 uid="uid://bkis65uupkkh3"]
 
-[ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="2_1ve0v"]
+[ext_resource type="Script" uid="uid://p8gvf5nx2104" path="res://Scripts/c_end_plat.gd" id="1_mw8bl"]
+[ext_resource type="Shader" uid="uid://do7wtlsnk55fu" path="res://Scenes/platform_cyber.gdshader" id="2_7a8vg"]
+[ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="3_b143v"]
 
-[sub_resource type="GDScript" id="GDScript_fwkeb"]
-script/source = "extends Node3D
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v5akp"]
+render_priority = 0
+shader = ExtResource("2_7a8vg")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 19.335
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-var p1 = false
-var p2 = false
-var winner
-var complete
+[sub_resource type="BoxMesh" id="BoxMesh_dpwo7"]
+material = SubResource("ShaderMaterial_v5akp")
 
-func _ready() -> void:
-	complete = false
-
-func finish():
-	complete = true
-	var tween = create_tween()
-	tween.tween_property($finish,\"position:x\",137,0.3)
-	tween.tween_property($finish,\"position:x\",592,1)
-	tween.tween_property($finish,\"position:x\",3000,0.3)
-	if p1:
-		winner = $p1
-	else:
-		winner = $p2
-	tween.tween_property(winner,\"modulate:a\",1.0,1.0)
-	tween.tween_interval(2.0)
-	tween.tween_property(winner,\"modulate:a\",0.0,1.0)
-	await tween.finished
-	get_tree().change_scene_to_file(\"res://Scenes/result.tscn\")
-		
-func _on_checkpoint_body_entered(body: Node3D) -> void:
-	if body.is_in_group(\"players\"):
-		$Camera3D.make_current()
-		print(\"End Reached\")
-		if body.name == \"P1\":
-			p1 = true
-		else:
-			p2 = true
-		finish()
-"
-
-[sub_resource type="BoxMesh" id="BoxMesh_rcghw"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fwkeb"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nj2io"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[sub_resource type="PrismMesh" id="PrismMesh_1ve0v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2kb0"]
+render_priority = 0
+shader = ExtResource("2_7a8vg")
+shader_parameter/bg_color = Color(0.37513962, 0.40601063, 0.49804777, 1)
+shader_parameter/line_color = Color(0, 0.5, 1, 1)
+shader_parameter/grid_scale = 20.0
+shader_parameter/line_thickness = 5.0
+shader_parameter/glow_strength = 5.0
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h2wjt"]
+[sub_resource type="PrismMesh" id="PrismMesh_qloaa"]
+material = SubResource("ShaderMaterial_e2kb0")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_q8edm"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
-[node name="end_platform" type="Node3D"]
-script = SubResource("GDScript_fwkeb")
+[node name="c_end_plat" type="Node3D"]
+script = ExtResource("1_mw8bl")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-33.29948, 0, 0.053109646, 0, 0.89611554, 0, -0.027893424, 0, -63.40203, -0.008571774, 0, 40.176205)
-mesh = SubResource("BoxMesh_rcghw")
+mesh = SubResource("BoxMesh_dpwo7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_fwkeb")
+shape = SubResource("ConcavePolygonShape3D_nj2io")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(-15.805416, -0.77448976, 0.05310917, -27.15643, 0.45076394, -9.872579e-08, -0.013239443, -0.0006487556, -63.402023, -8.246953, 13.451, 40.16889)
-mesh = SubResource("BoxMesh_rcghw")
+mesh = SubResource("BoxMesh_dpwo7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_fwkeb")
+shape = SubResource("ConcavePolygonShape3D_nj2io")
 
 [node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
 transform = Transform3D(-15.782189, 0.77487504, 0.05310917, 27.169931, 0.45010146, 0, -0.01322031, 0.0006490797, -63.40203, 8.305044, 13.444, 40.18276)
-mesh = SubResource("BoxMesh_rcghw")
+mesh = SubResource("BoxMesh_dpwo7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D3"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D3/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_fwkeb")
+shape = SubResource("ConcavePolygonShape3D_nj2io")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
 transform = Transform3D(-33.491386, 0, 0.0008376576, 0, 27.617926, 0, -0.028054595, 0, -0.99999964, 0.009096563, 13.436345, 72.34787)
-mesh = SubResource("PrismMesh_1ve0v")
+mesh = SubResource("PrismMesh_qloaa")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D4"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D4/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_h2wjt")
+shape = SubResource("ConcavePolygonShape3D_q8edm")
 
 [node name="checkpoint" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 26.985886)
@@ -115,7 +99,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(554, 180)
 theme_override_constants/outline_size = 65
-theme_override_fonts/font = ExtResource("2_1ve0v")
+theme_override_fonts/font = ExtResource("3_b143v")
 theme_override_font_sizes/font_size = 281
 text = "FINISH"
 
@@ -135,7 +119,7 @@ grow_vertical = 2
 pivot_offset = Vector2(665, 220)
 theme_override_colors/font_color = Color(0.21960784, 0.40784314, 1, 1)
 theme_override_constants/outline_size = 65
-theme_override_fonts/font = ExtResource("2_1ve0v")
+theme_override_fonts/font = ExtResource("3_b143v")
 theme_override_font_sizes/font_size = 201
 text = "PLAYER 1
 Wins"
@@ -157,7 +141,7 @@ grow_vertical = 2
 pivot_offset = Vector2(665, 220)
 theme_override_colors/font_color = Color(0.82617414, 0.21925244, 0.27008823, 1)
 theme_override_constants/outline_size = 65
-theme_override_fonts/font = ExtResource("2_1ve0v")
+theme_override_fonts/font = ExtResource("3_b143v")
 theme_override_font_sizes/font_size = 201
 text = "PLAYER 2
 Wins"

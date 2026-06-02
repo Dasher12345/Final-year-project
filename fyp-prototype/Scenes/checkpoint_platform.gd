@@ -9,7 +9,7 @@ func _on_checkpoint_body_entered(body: Node3D) -> void:
 			get_tree().current_scene.set_checkpoint(body.global_transform)
 			check_1 = true
 			print("player reached checkpoint")
-		if body.name == "P2" and !check_2:
+		elif body.name == "P2" and !check_2:
 			get_tree().current_scene.set_checkpoint(body.global_transform)
 			check_2 = true
 			print("player 2 reached checkpoint")

@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=3 uid="uid://8pluxx8r37xq"]
+
+[ext_resource type="PackedScene" uid="uid://befvmedhcgwdg" path="res://Scenes/Track_Sections/Cyberspace Sections/falling_platform_c.tscn" id="1_j6eu3"]
+[ext_resource type="PackedScene" uid="uid://ct1yigwd6vxdm" path="res://Scenes/cyber_cube.tscn" id="2_inep2"]
+
+[node name="sec_2_c" type="Node3D"]
+
+[node name="falling_platform_c" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.770657, 0.66275406, 302.0553)
+
+[node name="falling_platform_c2" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 293.78857)
+
+[node name="falling_platform_c3" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.476767, 0.66275406, 267.40643)
+
+[node name="falling_platform_c4" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.88248, 0.66275406, 244.77849)
+
+[node name="falling_platform_c5" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.630499, 0.66275406, 233.09308)
+
+[node name="falling_platform_c6" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32042503, 0.66275406, 332.32147)
+
+[node name="falling_platform_c7" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.155838, 0.66275406, 272.01825)
+
+[node name="falling_platform_c8" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 211.2262)
+
+[node name="falling_platform_c9" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.496206, 0.66275406, 204.73308)
+
+[node name="falling_platform_c10" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.71546, 0.66275406, 168.44359)
+
+[node name="falling_platform_c11" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 175.63084)
+
+[node name="falling_platform_c12" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.63604, 0.66275406, 144.65358)
+
+[node name="falling_platform_c13" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.00153, 0.66275406, 130.33382)
+
+[node name="falling_platform_c14" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 111.4861)
+
+[node name="falling_platform_c15" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.534187, 0.66275406, 91.233505)
+
+[node name="falling_platform_c16" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.79364, 0.66275406, 55.746902)
+
+[node name="falling_platform_c17" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2392197, 0.66275406, 27.69365)
+
+[node name="falling_platform_c18" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.13453, 0.66275406, 72.675064)
+
+[node name="falling_platform_c19" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.029556, 0.66275406, 46.80992)
+
+[node name="falling_platform_c20" parent="." instance=ExtResource("1_j6eu3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.071241, 0.66275406, 97.81343)
+
+[node name="end" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 332.3048)
+
+[node name="Cyber Cube" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(19.704222, 0, 0, 0, 19.704222, 0, 0, 0, 19.704222, 72.66625, 61.14327, 101.36158)
+
+[node name="Cyber Cube2" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(5.454026, -14.32084, -12.386421, 5.771102, 13.534024, -13.106519, 18.03342, 0, 7.940531, -64.50475, 53.493504, 201.84637)
+
+[node name="Cyber Cube3" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(-0.36916596, -12.883798, -14.903955, -14.797286, 10.022443, -8.297429, 13.006166, 11.036973, -9.863125, 72.66625, 34.046406, 263.78012)
+
+[node name="Cyber Cube4" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(19.704222, 0, 0, 0, -12.770434, -15.005744, 0, 15.005744, -12.770434, -10.824242, 61.14327, 138.9033)
+
+[node name="Cyber Cube5" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(16.509974, -10.755328, 0, 10.755328, 16.509974, 0, 0, 0, 19.704222, -170.4302, 61.14327, 187.19562)
+
+[node name="Cyber Cube6" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(18.33882, 0, -7.2072206, 0, 19.704222, 0, 7.2072206, 0, 18.33882, 146.05032, 88.44249, 181.4371)
+
+[node name="Cyber Cube7" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(19.704222, 0, 0, 0, 18.875517, 5.6543093, 0, -5.6543093, 18.875517, -112.57112, 66.22006, 75.31257)
+
+[node name="Cyber Cube8" parent="." instance=ExtResource("2_inep2")]
+transform = Transform3D(15.787466, 0, -11.790347, 0, 19.704222, 0, 11.790347, 0, 15.787466, -2.9357224, 84.9361, 293.68753)

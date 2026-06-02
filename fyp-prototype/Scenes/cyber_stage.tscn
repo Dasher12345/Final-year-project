@@ -101,3 +101,6 @@ vertical_alignment = 1
 
 [node name="MouseLookRouter" type="Node3D" parent="."]
 script = ExtResource("6_aleys")
+
+[connection signal="pressed" from="CanvasLayer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="CanvasLayer/Quit" to="." method="_on_quit_pressed"]
