@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://6m7fgekl7bsm"]
+[gd_scene load_steps=24 format=3 uid="uid://6m7fgekl7bsm"]
 
 [ext_resource type="Script" uid="uid://0eea8f12haat" path="res://Scenes/options.gd" id="1_qyyw6"]
 [ext_resource type="Texture2D" uid="uid://duues1bxl00o2" path="res://assets/images/red_hexa.jpg" id="2_38txh"]
@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://bqgg6xn2nnici" path="res://assets/Buttons/Save_pressed.png" id="18_gc10f"]
 [ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="19_mgjjt"]
 [ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="20_pqc76"]
+[ext_resource type="AudioStream" uid="uid://4s0ljin3nwcl" path="res://assets/SFX/button3.wav" id="21_ojj2c"]
+[ext_resource type="AudioStream" uid="uid://ufcds6x0jyk" path="res://assets/SFX/button1.wav" id="22_wxr1c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38txh"]
 bg_color = Color(0.28118682, 0.28118688, 0.28118682, 0.78039217)
@@ -290,6 +292,12 @@ texture = ExtResource("19_mgjjt")
 [node name="Gate2" type="Sprite2D" parent="."]
 position = Vector2(960, 539.105)
 texture = ExtResource("20_pqc76")
+
+[node name="Button3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("21_ojj2c")
+
+[node name="Button1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("22_wxr1c")
 
 [connection signal="pressed" from="back" to="." method="_on_back_pressed"]
 [connection signal="toggled" from="Volume" to="." method="_on_volume_toggled"]

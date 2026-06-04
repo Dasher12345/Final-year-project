@@ -1,11 +1,22 @@
-[gd_scene load_steps=9 format=3 uid="uid://tm4w6mqtoly8"]
+[gd_scene load_steps=20 format=3 uid="uid://tm4w6mqtoly8"]
 
 [ext_resource type="Script" uid="uid://1xahuse7sqqf" path="res://Scenes/cyber_stage.gd" id="1_tmo1s"]
 [ext_resource type="Shader" uid="uid://dnp47ovmi8aw4" path="res://cybersky.gdshader" id="2_qwtnr"]
 [ext_resource type="PackedScene" uid="uid://2hvmwet7jf82" path="res://Scenes/level_generator.tscn" id="3_5oqu1"]
-[ext_resource type="AudioStream" uid="uid://cu7wvd7ar03nj" path="res://Sound/Horizon Final OST.mp3" id="4_wmgwe"]
-[ext_resource type="AudioStream" uid="uid://b4sqln7lut0f" path="res://Sound/Horizon OST.mp3" id="5_o58ah"]
+[ext_resource type="AudioStream" uid="uid://d52h55nbvgdl" path="res://Sound/Cyber Final OST.mp3" id="4_vvf3k"]
+[ext_resource type="AudioStream" uid="uid://coe56jwkm1p21" path="res://Sound/Cyber OST.mp3" id="5_y1k2l"]
 [ext_resource type="Script" uid="uid://bolnpqok7p1ks" path="res://Scripts/mouse_look_router.gd" id="6_aleys"]
+[ext_resource type="FontFile" uid="uid://buihwp1y7kphc" path="res://assets/fonts/cyberform.ttf" id="7_vvf3k"]
+[ext_resource type="Texture2D" uid="uid://dfjtilq67y732" path="res://assets/images/pause.png" id="8_y1k2l"]
+[ext_resource type="Texture2D" uid="uid://irs8bn2otley" path="res://assets/Buttons/Resume.png" id="9_u3kry"]
+[ext_resource type="Texture2D" uid="uid://cmjto51ro7v3j" path="res://assets/Buttons/Resume_pressed.png" id="10_coesl"]
+[ext_resource type="Texture2D" uid="uid://ckeq5f6kjqw5v" path="res://assets/Buttons/back_menu.png" id="11_bm1pn"]
+[ext_resource type="Texture2D" uid="uid://b2ujy3inoyd4y" path="res://assets/Buttons/back_menu_pressed.png" id="12_kp12i"]
+[ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="13_y1k2l"]
+[ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="14_coesl"]
+[ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="15_bm1pn"]
+[ext_resource type="AudioStream" uid="uid://ufcds6x0jyk" path="res://assets/SFX/button1.wav" id="16_kp12i"]
+[ext_resource type="AudioStream" uid="uid://4s0ljin3nwcl" path="res://assets/SFX/button3.wav" id="17_3k8oy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vvf3k"]
 render_priority = 0
@@ -29,78 +40,129 @@ light_color = Color(0.7344887, 0.6792639, 0.69719094, 1)
 light_energy = 1.7
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(4000, 0, 0, 0, 3000, 0, 0, 0, 4000, -0.017102242, 0.017089844, -0.00026607513)
+transform = Transform3D(4000, 0, 0, 0, 3000, 0, 0, 0, 4000, -0.017102242, 0.017089844, 736.54724)
 mesh = SubResource("BoxMesh_y1k2l")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1907.0
-offset_bottom = 1080.0
-color = Color(0, 0, 0, 0.152941)
 
 [node name="LevelGenerator" parent="." instance=ExtResource("3_5oqu1")]
 
 [node name="Final_Checkpoint" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("4_wmgwe")
+stream = ExtResource("4_vvf3k")
 parameters/looping = true
 
 [node name="Stage_OST" type="AudioStreamPlayer" parent="."]
 process_mode = 3
-stream = ExtResource("5_o58ah")
+stream = ExtResource("5_y1k2l")
 parameters/looping = true
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-process_mode = 3
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
-offset_left = 736.0
-offset_top = 323.0
-offset_right = 1191.0
-offset_bottom = 693.0
-color = Color(0.529067, 0.529067, 0.529067, 0.337255)
-
-[node name="Resume" type="Button" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -109.0
-offset_top = -84.0
-offset_right = 113.0
-offset_bottom = -19.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 41
-text = "Resume"
-
-[node name="Quit" type="Button" parent="CanvasLayer"]
-offset_left = 883.0
-offset_top = 551.0
-offset_right = 1040.0
-offset_bottom = 616.0
-theme_override_font_sizes/font_size = 41
-text = "Quit"
-
-[node name="Pause Menu" type="Label" parent="CanvasLayer"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -151.0
-offset_top = -191.0
-offset_right = 151.0
-offset_bottom = -121.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 51
-text = "Pause Menu"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="MouseLookRouter" type="Node3D" parent="."]
 script = ExtResource("6_aleys")
 
-[connection signal="pressed" from="CanvasLayer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="CanvasLayer/Quit" to="." method="_on_quit_pressed"]
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Time" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.5
+offset_right = 89.5
+offset_bottom = 64.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_vvf3k")
+theme_override_font_sizes/font_size = 61
+text = "TIME"
+
+[node name="time_count" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.5
+offset_top = 63.655
+offset_right = 64.5
+offset_bottom = 142.655
+grow_horizontal = 2
+theme_override_constants/outline_size = 11
+theme_override_fonts/font = ExtResource("7_vvf3k")
+theme_override_font_sizes/font_size = 76
+text = "00"
+horizontal_alignment = 1
+
+[node name="Pause" type="Sprite2D" parent="."]
+position = Vector2(960, 540)
+texture = ExtResource("8_y1k2l")
+
+[node name="Resume" type="TextureButton" parent="."]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -568.0
+offset_top = -72.0
+offset_right = 260.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture_normal = ExtResource("9_u3kry")
+texture_hover = ExtResource("10_coesl")
+
+[node name="Quit" type="TextureButton" parent="."]
+process_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -72.0
+offset_right = 806.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
+texture_normal = ExtResource("11_bm1pn")
+texture_hover = ExtResource("12_kp12i")
+
+[node name="Final" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1002.0
+offset_top = -1276.0
+offset_right = 1002.0
+offset_bottom = -693.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(554, 180)
+theme_override_constants/outline_size = 65
+theme_override_fonts/font = ExtResource("13_y1k2l")
+theme_override_font_sizes/font_size = 171
+text = "FINAL
+CHECKPOINT"
+horizontal_alignment = 1
+
+[node name="Gate1" type="Sprite2D" parent="."]
+position = Vector2(960, 0)
+texture = ExtResource("14_coesl")
+
+[node name="Gate2" type="Sprite2D" parent="."]
+position = Vector2(960, 1078)
+texture = ExtResource("15_bm1pn")
+
+[node name="Button1" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("16_kp12i")
+
+[node name="Button3" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("17_3k8oy")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

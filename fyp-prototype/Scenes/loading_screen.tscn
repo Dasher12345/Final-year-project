@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccg5qdswgp52w"]
+[gd_scene load_steps=6 format=3 uid="uid://ccg5qdswgp52w"]
 
 [ext_resource type="Script" uid="uid://cix4vvhpgw7yv" path="res://Scripts/loading_screen.gd" id="1_oobaa"]
+[ext_resource type="FontFile" uid="uid://buihwp1y7kphc" path="res://assets/fonts/cyberform.ttf" id="2_nfm0g"]
+[ext_resource type="PackedScene" uid="uid://bqbojpw6ulwks" path="res://Scenes/cyber_screen.tscn" id="2_yisgd"]
+[ext_resource type="PackedScene" uid="uid://bmhe6r8lskx7b" path="res://Scripts/horizon_screen.tscn" id="3_gegoj"]
+[ext_resource type="PackedScene" uid="uid://c735t0qcav4vi" path="res://apocolypse_screen.tscn" id="4_m2hk5"]
 
 [node name="Loading Screen" type="Control"]
 layout_mode = 3
@@ -10,11 +14,33 @@ offset_bottom = 1080.0
 mouse_filter = 2
 script = ExtResource("1_oobaa")
 
-[node name="Label" type="Label" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.54509807)
 layout_mode = 0
-offset_left = 794.0
-offset_top = 448.0
-offset_right = 834.0
-offset_bottom = 471.0
-scale = Vector2(9.8, 9.8)
+offset_right = 1932.0
+offset_bottom = 1123.0
+color = Color(0, 0, 0, 1)
+
+[node name="Cyber" parent="." instance=ExtResource("2_yisgd")]
+
+[node name="Node3D" parent="." instance=ExtResource("3_gegoj")]
+
+[node name="apocolypse" parent="." instance=ExtResource("4_m2hk5")]
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_nfm0g")
+theme_override_font_sizes/font_size = 166
 text = "0%"
+horizontal_alignment = 1

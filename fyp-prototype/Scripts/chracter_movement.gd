@@ -5,9 +5,9 @@ extends CharacterBody3D
 
 const MAGIC_PLATFORM = preload("uid://jbnapw0ohjf7")
 
-@onready var dash_sound: AudioStreamPlayer3D = $DashSound
-@onready var jump_sound: AudioStreamPlayer3D = $JumpSound
-@onready var double_jump_sound: AudioStreamPlayer3D = $DoubleJump_Sound
+@onready var dash_sound: AudioStreamPlayer = $DashSound
+@onready var jump_sound: AudioStreamPlayer = $JumpSound
+@onready var double_jump_sound: AudioStreamPlayer = $DoubleJump_Sound
 
 @onready var model_mesh: MeshInstance3D = $Armature/Skeleton3D/Model
 

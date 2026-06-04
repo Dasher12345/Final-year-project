@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://2hvmwet7jf82"]
+[gd_scene load_steps=32 format=3 uid="uid://2hvmwet7jf82"]
 
 [ext_resource type="Script" uid="uid://cc3srpr3vv8wp" path="res://Scripts/level_generator.gd" id="1_q7b6x"]
 [ext_resource type="PackedScene" uid="uid://cu2dd4wq77abs" path="res://Scenes/Track_Sections/sec_1_h.tscn" id="3_x4guj"]
@@ -21,6 +21,16 @@
 [ext_resource type="PackedScene" uid="uid://cxbdensj0imva" path="res://Scenes/Track_Sections/Cyberspace Sections/c_check_plat.tscn" id="19_bg626"]
 [ext_resource type="PackedScene" uid="uid://bkis65uupkkh3" path="res://Scenes/Track_Sections/Cyberspace Sections/c_end_plat.tscn" id="20_udmoy"]
 [ext_resource type="PackedScene" uid="uid://cl8yg0oh4dy8s" path="res://Scenes/Track_Sections/Cyberspace Sections/c_start_plat_m.tscn" id="21_spjcl"]
+[ext_resource type="PackedScene" uid="uid://bj12d2xadaj1r" path="res://Scenes/Track_Sections/Apocolypse Sections/subsec_1_a.tscn" id="22_uvhy2"]
+[ext_resource type="PackedScene" uid="uid://bjrinv8k2yjbt" path="res://Scenes/Track_Sections/Apocolypse Sections/subsec_2_a.tscn" id="23_o6r20"]
+[ext_resource type="PackedScene" uid="uid://b6w7mxgul1c7r" path="res://Scenes/Track_Sections/Apocolypse Sections/subsec_3_a.tscn" id="24_hqos5"]
+[ext_resource type="PackedScene" uid="uid://t7k4tto7h7ki" path="res://Scenes/Track_Sections/Apocolypse Sections/subsec_4_a.tscn" id="25_1qbvl"]
+[ext_resource type="PackedScene" uid="uid://bqnw2e6sqsiu2" path="res://Scenes/Track_Sections/Apocolypse Sections/sec_1_a.tscn" id="26_jin6i"]
+[ext_resource type="PackedScene" uid="uid://bc5au7d3gave7" path="res://Scenes/Track_Sections/Apocolypse Sections/sec_2_a.tscn" id="27_lhoib"]
+[ext_resource type="PackedScene" uid="uid://cyvr3euewj6ll" path="res://Scenes/Track_Sections/Apocolypse Sections/a_start_plat.tscn" id="28_7qv55"]
+[ext_resource type="PackedScene" uid="uid://cblnwh8ghp60e" path="res://Scenes/Track_Sections/Apocolypse Sections/a_check_plat.tscn" id="29_e8s25"]
+[ext_resource type="PackedScene" uid="uid://bpt3ub2fmy631" path="res://Scenes/Track_Sections/Apocolypse Sections/a_end_plat.tscn" id="30_kyx4s"]
+[ext_resource type="PackedScene" uid="uid://dr2wpn0muus46" path="res://Scenes/Track_Sections/Apocolypse Sections/a_start_plat_m.tscn" id="31_dhdw7"]
 
 [node name="LevelGenerator" type="Node3D"]
 script = ExtResource("1_q7b6x")
@@ -30,3 +40,6 @@ sub_sections = Array[PackedScene]([ExtResource("5_whj25"), ExtResource("6_iydtg"
 c_sub_sections = Array[PackedScene]([ExtResource("12_qkg5n"), ExtResource("13_syp58"), ExtResource("14_m3p88"), ExtResource("15_yfp85")])
 c_section_scenes = Array[PackedScene]([ExtResource("16_bjqek"), ExtResource("17_q6o56")])
 c_check_platforms = Array[PackedScene]([ExtResource("18_q4wgq"), ExtResource("19_bg626"), ExtResource("20_udmoy"), ExtResource("21_spjcl")])
+a_sub_sections = Array[PackedScene]([ExtResource("22_uvhy2"), ExtResource("23_o6r20"), ExtResource("24_hqos5"), ExtResource("25_1qbvl")])
+a_sections = Array[PackedScene]([ExtResource("26_jin6i"), ExtResource("27_lhoib")])
+a_checks = Array[PackedScene]([ExtResource("28_7qv55"), ExtResource("29_e8s25"), ExtResource("30_kyx4s"), ExtResource("31_dhdw7")])

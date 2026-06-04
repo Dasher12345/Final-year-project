@@ -151,8 +151,8 @@ metadata/_edit_lock_ = true
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.94918954, 0.31470492, 0, -0.31470492, 0.94918954, 0, 195.44537, 0)
 
-[node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_vuc6c")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment2"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(0.49096, -0.654034, 0.575498, -0.736872, 0.0406349, 0.674809, -0.464734, -0.755373, -0.46199, 0, 480.903, 0)

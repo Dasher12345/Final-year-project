@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc5au7d3gave7"]
+
+[ext_resource type="PackedScene" uid="uid://cnjftujew45p0" path="res://Scenes/Track_Sections/Apocolypse Sections/fall_plat_a.tscn" id="1_2hfo3"]
+
+[node name="sec_2_a" type="Node3D"]
+
+[node name="fall_plat_a" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 293.78857)
+
+[node name="fall_plat_a2" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.770657, 0.66275406, 302.0553)
+
+[node name="fall_plat_a3" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.476767, 0.66275406, 267.40643)
+
+[node name="fall_plat_a4" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.88248, 0.66275406, 244.77849)
+
+[node name="fall_plat_a5" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.630499, 0.66275406, 233.09308)
+
+[node name="fall_plat_a6" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.32042503, 0.66275406, 332.32147)
+
+[node name="fall_plat_a7" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -46.155838, 0.66275406, 272.01825)
+
+[node name="fall_plat_a8" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.850283, 0.66275406, 211.2262)
+
+[node name="fall_plat_a9" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.496206, 0.66275406, 204.73308)
+
+[node name="fall_plat_a10" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.71546, 0.66275406, 168.44359)
+
+[node name="fall_plat_a11" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 175.63084)
+
+[node name="fall_plat_a12" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.63604, 0.66275406, 144.65358)
+
+[node name="fall_plat_a13" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.00153, 0.66275406, 130.33382)
+
+[node name="fall_plat_a14" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.44748, 0.66275406, 111.4861)
+
+[node name="fall_plat_a15" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.534187, 0.66275406, 91.233505)
+
+[node name="fall_plat_a16" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.79364, 0.66275406, 55.746902)
+
+[node name="fall_plat_a17" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2392197, 0.66275406, 27.69365)
+
+[node name="fall_plat_a18" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.13453, 0.66275406, 72.675064)
+
+[node name="fall_plat_a19" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.029556, 0.66275406, 46.80992)
+
+[node name="fall_plat_a20" parent="." instance=ExtResource("1_2hfo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.071241, 0.66275406, 97.81343)
+
+[node name="end" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 332.3048)

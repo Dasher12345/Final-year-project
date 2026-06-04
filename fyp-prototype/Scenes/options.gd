@@ -1,5 +1,4 @@
 extends Node2D
-var main_menu = preload("res://Scenes/main_menu.tscn")
 
 @onready var master_slider = $"VBoxContainer/Master Volume"
 @onready var music_slider = $VBoxContainer/Music
@@ -10,14 +9,17 @@ var music_value := 1.0
 var sfx_value := 1.0
 
 func _ready() -> void:
+	await get_tree().process_frame
 	load_audio()
 	apply_audio_to_sliders()
 	apply_audio()
 	connect_sliders()
+	await get_tree().process_frame
 	open_gates()
 	$AudioStreamPlayer2D.play()
 	
 func _on_back_pressed() -> void:
+	$Button1.play()
 	$CanvasLayer.hide()
 	$VBoxContainer.hide()
 	$CanvasLayer2.hide()
@@ -32,6 +34,7 @@ func _on_back_pressed() -> void:
 	close_gates()
 	
 func open_gates():
+	await get_tree().create_timer(0.5).timeout
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property($Gate1,"position:y",0,0.5)
@@ -45,11 +48,12 @@ func close_gates():
 	tween.tween_property($AudioStreamPlayer2D,"volume_db",-40,2)
 	await tween.finished
 	await get_tree().process_frame
-	get_tree().change_scene_to_packed(main_menu)
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 
 
 func _on_volume_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		$Panel.show()
 		$CanvasLayer.show()
 		$VBoxContainer.show()
@@ -64,6 +68,7 @@ func _on_volume_toggled(pressed) -> void:
 
 func _on_display_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		$Panel.show()
 		$CanvasLayer.hide()
 		$VBoxContainer.hide()

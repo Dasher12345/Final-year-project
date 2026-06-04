@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cfxply1nitunx"]
+[gd_scene load_steps=66 format=3 uid="uid://cfxply1nitunx"]
 
 [ext_resource type="Script" uid="uid://caxvskhdk4jir" path="res://Scripts/main_menu.gd" id="1_1ehe0"]
 [ext_resource type="Texture2D" uid="uid://bwg0x1jhmfo8g" path="res://assets/images/neon-hex-textures-networking.jpg" id="2_m3bi6"]
@@ -51,11 +51,15 @@
 [ext_resource type="AudioStream" uid="uid://tqrl7ce288h6" path="res://assets/SFX/button2.wav" id="48_y17f6"]
 [ext_resource type="Texture2D" uid="uid://d1syhkq8c6oac" path="res://assets/images/Blue Ring.png" id="49_y17f6"]
 [ext_resource type="PackedScene" uid="uid://bqbojpw6ulwks" path="res://Scenes/cyber_screen.tscn" id="50_hovqx"]
+[ext_resource type="AudioStream" uid="uid://4s0ljin3nwcl" path="res://assets/SFX/button3.wav" id="51_yuqo8"]
 [ext_resource type="PackedScene" uid="uid://c735t0qcav4vi" path="res://apocolypse_screen.tscn" id="52_4v5qc"]
 [ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="53_w71i6"]
 [ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="54_m8avj"]
 [ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="55_mldsx"]
+[ext_resource type="Texture2D" uid="uid://be0vrkmiyh4pc" path="res://assets/images/title_bg.jpg" id="56_ifnak"]
 [ext_resource type="FontFile" uid="uid://bm81gd1j2gelh" path="res://assets/fonts/Mont-HeavyDEMO.otf" id="56_mldsx"]
+[ext_resource type="Texture2D" uid="uid://dq1464y77rd6u" path="res://assets/images/Logo/Ring.png" id="57_u2gki"]
+[ext_resource type="Texture2D" uid="uid://dreo3oj6qrpbe" path="res://assets/images/Logo/Text.png" id="58_yuqo8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bmhhk"]
 bg_color = Color(0.08627451, 0.08627451, 0.08627451, 0.5529412)
@@ -290,11 +294,13 @@ texture_hover = ExtResource("35_y82t1")
 
 [node name="Button1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("47_3l6me")
-volume_db = -8.0
 
 [node name="Button2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("48_y17f6")
-volume_db = -8.0
+volume_db = -4.0
+
+[node name="Button3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("51_yuqo8")
 
 [node name="BlueRing" type="Sprite2D" parent="."]
 position = Vector2(1508.0001, 562.00006)
@@ -319,16 +325,6 @@ offset_bottom = 230.0
 theme_override_fonts/font = ExtResource("53_w71i6")
 theme_override_font_sizes/font_size = 100
 text = "Main Menu"
-
-[node name="Gate1" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(960, 542)
-texture = ExtResource("54_m8avj")
-
-[node name="Gate2" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(960, 539.105)
-texture = ExtResource("55_mldsx")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 offset_left = 920.0
@@ -369,6 +365,46 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="StatsScroll/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/separation = 44
+
+[node name="TitleBg" type="Sprite2D" parent="."]
+position = Vector2(961.20087, 595.46857)
+rotation = 1.5707964
+scale = Vector2(1.6751862, 1.7992767)
+texture = ExtResource("56_ifnak")
+
+[node name="Ring" type="Sprite2D" parent="."]
+position = Vector2(967, 326)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("57_u2gki")
+
+[node name="Text" type="Sprite2D" parent="."]
+position = Vector2(967.771, 324.11)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("58_yuqo8")
+
+[node name="press" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -356.0
+offset_top = 290.0
+offset_right = 356.0
+offset_bottom = 389.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("53_w71i6")
+theme_override_font_sizes/font_size = 96
+text = "PRESS ENTER"
+
+[node name="Gate1" type="Sprite2D" parent="."]
+position = Vector2(960, 0)
+texture = ExtResource("54_m8avj")
+
+[node name="Gate2" type="Sprite2D" parent="."]
+position = Vector2(960, 1078)
+texture = ExtResource("55_mldsx")
 
 [connection signal="pressed" from="Single" to="." method="_on_single_pressed"]
 [connection signal="pressed" from="Multiplayer" to="." method="_on_multiplayer_pressed"]

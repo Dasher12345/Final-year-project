@@ -24134,14 +24134,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DashSound" type="AudioStreamPlayer3D" parent="."]
+[node name="DashSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_j3t1n")
 
-[node name="JumpSound" type="AudioStreamPlayer3D" parent="."]
+[node name="JumpSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_dkglb")
 
-[node name="DoubleJump_Sound" type="AudioStreamPlayer3D" parent="."]
+[node name="DoubleJump_Sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_j3t1n")
-pitch_scale = 2.42
 
 [connection signal="timeout" from="Coyote_Timer" to="." method="_on_coyote_timer_timeout"]

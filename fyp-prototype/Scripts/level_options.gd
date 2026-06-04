@@ -2,9 +2,12 @@ extends Node
 var seed: int = 0
 var use_random_seed := true
 var scene
+var current_run_seed : int = -1
 const save_path = "user://save_seed.data"
-var stage = "h"
+var stage = "c"
 var mult = false
+var tutorial = false
+var title = true
 
 func save_seed():
 	var file = FileAccess.open(save_path,FileAccess.WRITE)

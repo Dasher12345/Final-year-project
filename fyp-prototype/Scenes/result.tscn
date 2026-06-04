@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://tovj3jlm4fxg"]
+[gd_scene load_steps=15 format=3 uid="uid://tovj3jlm4fxg"]
 
 [ext_resource type="PackedScene" uid="uid://bqbojpw6ulwks" path="res://Scenes/cyber_screen.tscn" id="1_37uq0"]
 [ext_resource type="Script" uid="uid://x5267ghipgq2" path="res://Scenes/result.gd" id="1_dj5nj"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://ddcbkge42rc0e" path="res://assets/Buttons/Main_pressed.png" id="9_4x37f"]
 [ext_resource type="FontFile" uid="uid://bm81gd1j2gelh" path="res://assets/fonts/Mont-HeavyDEMO.otf" id="10_whfkv"]
 [ext_resource type="AudioStream" uid="uid://blfwevek5golx" path="res://Sound/Result Screen.mp3" id="11_ym087"]
+[ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="12_ydgqw"]
+[ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="13_4x37f"]
+[ext_resource type="AudioStream" uid="uid://ufcds6x0jyk" path="res://assets/SFX/button1.wav" id="14_4x37f"]
 
 [node name="Result" type="Node3D"]
 script = ExtResource("1_dj5nj")
@@ -19,7 +22,7 @@ script = ExtResource("1_dj5nj")
 
 [node name="Node3D" parent="." instance=ExtResource("2_dj5nj")]
 
-[node name="Node3D2" parent="." instance=ExtResource("3_knq36")]
+[node name="apocolypse" parent="." instance=ExtResource("3_knq36")]
 
 [node name="Result" type="Sprite2D" parent="."]
 position = Vector2(960, 540)
@@ -83,8 +86,19 @@ text = "BEST TIME: "
 
 [node name="OST" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_ym087")
-volume_db = -10.0
 parameters/looping = true
+
+[node name="Gate1" type="Sprite2D" parent="."]
+position = Vector2(960, 542)
+texture = ExtResource("12_ydgqw")
+
+[node name="Gate2" type="Sprite2D" parent="."]
+position = Vector2(960, 539.105)
+texture = ExtResource("13_4x37f")
+
+[node name="Button1" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("14_4x37f")
 
 [connection signal="pressed" from="Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="Back" to="." method="_on_back_pressed"]

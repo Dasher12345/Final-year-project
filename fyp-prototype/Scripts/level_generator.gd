@@ -7,19 +7,26 @@ extends Node3D
 @export var c_sub_sections: Array[PackedScene] = []
 @export var c_section_scenes: Array[PackedScene] = []
 @export var c_check_platforms: Array[PackedScene] = []
+@export var a_sub_sections: Array[PackedScene] = []
+@export var a_sections: Array[PackedScene] = []
+@export var a_checks: Array[PackedScene] = []
+
 var stage = ["main", "sub"]
 var p1
 var p2
 var s = 3
 var endplat
+var final_check
 
 var rng := RandomNumberGenerator.new()
 var last_position := Vector3(0, 780, 0)
 
 func _ready():
 	if LevelOptions.use_random_seed:
-		rng.randomize()
-		LevelOptions.seed = rng.randi_range(0, 999_999_999)
+		if LevelOptions.current_run_seed == -1:
+			rng.randomize()
+			LevelOptions.current_run_seed = rng.randi_range(0, 999_999_999)
+		LevelOptions.seed = LevelOptions.current_run_seed
 	else:
 		LevelOptions.seed = clamp(LevelOptions.seed, 0, 999_999_999)
 	rng.seed = LevelOptions.seed
@@ -58,9 +65,14 @@ func generate_level():
 					subs_c += 1
 				spawned += 1
 			if spawned < sections:
-				await spawn_section(check_platforms[1])
+				if spawned == sections -1:
+					final_check = await spawn_section(check_platforms[1])
+					final_check.final = true
+				else:
+					await spawn_section(check_platforms[1])
 		endplat = await spawn_section(check_platforms[2])
 		print("Seed:", LevelOptions.seed)
+		
 	elif LevelOptions.stage == "c":
 		if LevelOptions.mult:
 			var start_platform = await spawn_section(c_check_platforms[3])
@@ -91,8 +103,50 @@ func generate_level():
 					subs_c += 1
 				spawned += 1
 			if spawned < sections:
-				await spawn_section(c_check_platforms[1])
+				if spawned == sections -1:
+					final_check = await spawn_section(c_check_platforms[1])
+					final_check.final = true
+				else:
+					await spawn_section(c_check_platforms[1])
 		endplat = await spawn_section(c_check_platforms[2])
+		print("Seed:", LevelOptions.seed)
+
+	elif LevelOptions.stage == "a":
+		if LevelOptions.mult:
+			var start_platform = await spawn_section(a_checks[3])
+			p1 = start_platform.get_node("GridContainer/SubViewportContainer/SubViewport/P1")
+			p2 = start_platform.get_node("GridContainer/SubViewportContainer2/SubViewport/P2")
+			p1.global_transform = start_platform.get_node("p1_spawn").global_transform
+			p2.global_transform = start_platform.get_node("p2_spawn").global_transform
+			p1.add_to_group("players")
+			p2.add_to_group("players")
+		else:
+			var start_platform = await spawn_section(a_checks[0])
+			p1 = start_platform.get_node("P1")
+			p1.add_to_group("players")
+		var spawned := 1
+		while spawned < sections:
+			var section_select = stage[rng.randi_range(0, stage.size() - 1)]
+			if section_select == "main":
+				var scene = a_sections[rng.randi_range(0, a_sections.size() - 1)]
+				await spawn_section(scene)
+				spawned += 1
+			elif section_select == "sub":
+				var subs_c := 0
+				var subs = a_sub_sections.duplicate()
+				while subs_c < s and subs.size() > 0:
+					var sub_select = subs[rng.randi_range(0, subs.size() - 1)]
+					await spawn_section(sub_select)
+					subs.erase(sub_select)
+					subs_c += 1
+				spawned += 1
+			if spawned < sections:
+				if spawned == sections -1:
+					final_check = await spawn_section(a_checks[1])
+					final_check.final = true
+				else:
+					await spawn_section(a_checks[1])
+		endplat = await spawn_section(a_checks[2])
 		print("Seed:", LevelOptions.seed)
 	
 func spawn_section(scene: PackedScene):
@@ -108,7 +162,9 @@ func spawn_section(scene: PackedScene):
 
 	await get_tree().process_frame
 
-	var end_marker = section.get_node("end")
+	var end_marker = section.get_node_or_null("end")
+	if end_marker == null:
+		print("MISSING END IN:", scene.resource_path)
+		return section
 	last_position = end_marker.global_position
-
 	return section

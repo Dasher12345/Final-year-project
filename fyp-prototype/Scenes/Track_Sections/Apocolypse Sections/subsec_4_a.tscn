@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://t7k4tto7h7ki"]
+
+[ext_resource type="Texture2D" uid="uid://dtb5hshatnkny" path="res://assets/textures/Synth-Metal_11-128x128.png" id="1_attf8"]
+[ext_resource type="Script" uid="uid://c0feck1niw1qd" path="res://Scripts/moving_platform.gd" id="1_oqics"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oqics"]
+albedo_color = Color(0.8481545, 0.5257777, 5.7756904e-07, 1)
+albedo_texture = ExtResource("1_attf8")
+uv1_scale = Vector3(1.645, 1, 1.67)
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_saxwy"]
+material = SubResource("StandardMaterial3D_oqics")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fqlao"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[node name="subsec_4_a" type="Node3D"]
+script = ExtResource("1_oqics")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(15.845056, 0, 0, 0, 0.89611554, 0, 0, 0, 15.714619, 0, 0, 16.126019)
+mesh = SubResource("BoxMesh_saxwy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_fqlao")
+
+[node name="end" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 24.011)

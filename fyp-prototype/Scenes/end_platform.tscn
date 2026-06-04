@@ -1,6 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://djg4ueqqg4p5r"]
+[gd_scene load_steps=12 format=3 uid="uid://djg4ueqqg4p5r"]
 
+[ext_resource type="Texture2D" uid="uid://c88j3oj0lf6om" path="res://assets/textures/rock023_alb_ht.png" id="1_1ve0v"]
 [ext_resource type="FontFile" uid="uid://bltofs4xwrpu2" path="res://assets/fonts/cyberformital.ttf" id="2_1ve0v"]
+[ext_resource type="Texture2D" uid="uid://dkn11ro0xbwt6" path="res://assets/main_menu/gate1.png" id="3_nrc7t"]
+[ext_resource type="Texture2D" uid="uid://dp4b5120o5qk5" path="res://assets/main_menu/gate2.png" id="4_4loba"]
 
 [sub_resource type="GDScript" id="GDScript_fwkeb"]
 script/source = "extends Node3D
@@ -11,6 +14,7 @@ var winner
 var complete
 
 func _ready() -> void:
+	open_gates()
 	complete = false
 
 func finish():
@@ -27,7 +31,7 @@ func finish():
 	tween.tween_interval(2.0)
 	tween.tween_property(winner,\"modulate:a\",0.0,1.0)
 	await tween.finished
-	get_tree().change_scene_to_file(\"res://Scenes/result.tscn\")
+	close_gates()
 		
 func _on_checkpoint_body_entered(body: Node3D) -> void:
 	if body.is_in_group(\"players\"):
@@ -38,14 +42,43 @@ func _on_checkpoint_body_entered(body: Node3D) -> void:
 		else:
 			p2 = true
 		finish()
+		
+func open_gates():
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Gate1,\"position:y\",0,0.5)
+	tween.tween_property($Gate2,\"position:y\",1078,0.5)
+
+func close_gates():
+	var tween = get_tree().create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Gate1,\"position:y\",542,0.5)
+	tween.tween_property($Gate2,\"position:y\",539.105,0.5)
+	tween.tween_property($AudioStreamPlayer2D,\"volume_db\",-40,2)
+	await tween.finished
+	await get_tree().process_frame
+	get_tree().change_scene_to_file(\"res://Scenes/result.tscn\")
 "
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2wjt"]
+albedo_color = Color(0.6872149, 0.68721503, 0.6872149, 1)
+albedo_texture = ExtResource("1_1ve0v")
+uv1_scale = Vector3(-0.4, 4, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_rcghw"]
+material = SubResource("StandardMaterial3D_h2wjt")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fwkeb"]
 data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nrc7t"]
+albedo_color = Color(0.6872149, 0.68721503, 0.6872149, 1)
+albedo_texture = ExtResource("1_1ve0v")
+uv1_scale = Vector3(-0.4, 4, 1)
+uv1_triplanar = true
+
 [sub_resource type="PrismMesh" id="PrismMesh_1ve0v"]
+material = SubResource("StandardMaterial3D_nrc7t")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h2wjt"]
 data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
@@ -162,5 +195,13 @@ theme_override_font_sizes/font_size = 201
 text = "PLAYER 2
 Wins"
 horizontal_alignment = 1
+
+[node name="Gate1" type="Sprite2D" parent="."]
+position = Vector2(960, 0)
+texture = ExtResource("3_nrc7t")
+
+[node name="Gate2" type="Sprite2D" parent="."]
+position = Vector2(960, 1078)
+texture = ExtResource("4_4loba")
 
 [connection signal="body_entered" from="checkpoint" to="." method="_on_checkpoint_body_entered"]

@@ -6,24 +6,49 @@ var selection_mode := ""
 var single = true
 var font = load("res://assets/fonts/Mont-HeavyDEMO.otf")
 
+var title_tween
+
 func _ready() -> void:
+	if LevelOptions.title == false:
+		$Gate1.position.y = 542
+		$Gate2.position.y = 539.105
+		$Ring.hide()
+		$TitleBg.hide()
+		$Text.hide()
+		$press.hide()
+		main_menu()
+		open()
+	else:
+		playtitle()
 	LevelOptions.mult = false
-	open()
 	$Panel.hide()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	main_menu()
 	$Main_Menu.play()
 	$Menu_2.play()
 	$Menu_2.volume_db = -40
 	$Start.disabled = true
 	$Seed_Input.editable = false
 	
+func playtitle():
+	title_tween = create_tween()
+	title_tween.set_loops()
+	title_tween.tween_property($press, "modulate:a", 0.0, 1.0)
+	title_tween.tween_property($press, "modulate:a", 1.0, 1.0)
+	
 func _process(delta: float) -> void:
+	if LevelOptions.title and Input.is_action_just_pressed("title"):
+		$Button1.play()
+		title_tween.kill()
+		$press.hide()
+		play_intro()
+		
+		
 	if seed and stage:
 		$Start.disabled = false
 		
 func _physics_process(delta: float) -> void:
 	$BlueRing.rotate(0.2*delta)
+	$Ring.rotate(0.2*delta)
 
 func _on_quit_pressed() -> void:
 	$Button1.play()
@@ -106,6 +131,7 @@ func main_menu():
 	
 func _on_random_seed_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		selection_mode = "random"
 		seed = true
 		$Seed_Input.editable = false
@@ -121,6 +147,7 @@ func _on_multiplayer_pressed() -> void:
 
 func _on_tutorial_pressed() -> void:
 	$Button2.play()
+	LevelOptions.tutorial = true
 	LevelOptions.use_random_seed = false
 	LevelOptions.scene = "res://Scenes/Test_Level.tscn"
 	var loadingscreen = load("res://Scenes/loading_screen.tscn")
@@ -143,6 +170,7 @@ func _on_back_pressed() -> void:
 
 func _on_custom_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		seed = true
 		selection_mode = "custom"
 		$Seed_Input.editable = true
@@ -151,6 +179,7 @@ func _on_custom_toggled(pressed) -> void:
 
 func _on_seed_toggled(button_pressed) -> void:
 	if button_pressed:
+		$Button3.play()
 		$stage.button_pressed = false
 		$Stats.button_pressed = false
 		$Panel.show()
@@ -193,6 +222,7 @@ func _on_start_pressed() -> void:
 
 func _on_stage_toggled(button_pressed) -> void:
 	if button_pressed:
+		$Button3.play()
 		$seed.button_pressed = false
 		$Stats.button_pressed = false
 		$Panel.show()
@@ -206,6 +236,7 @@ func _on_stage_toggled(button_pressed) -> void:
 
 func _on_stats_toggled(button_pressed) -> void:
 	if button_pressed:
+		$Button3.play()
 		$seed.button_pressed = false
 		$stage.button_pressed = false
 		$Panel.show()
@@ -225,6 +256,7 @@ func _on_stats_toggled(button_pressed) -> void:
 
 func _on_apocolypse_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		$Stage_panel.texture = $apocolypse_view.get_texture()
 		LevelOptions.stage = "a"
 		$CyberSpace.button_pressed = false
@@ -234,6 +266,7 @@ func _on_apocolypse_toggled(pressed) -> void:
 		
 func _on_horizon_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		$Stage_panel.texture = $horizon_view.get_texture()
 		LevelOptions.stage = "h"
 		$Stage_panel.show()
@@ -243,6 +276,7 @@ func _on_horizon_toggled(pressed) -> void:
 		
 func _on_cyber_space_toggled(pressed) -> void:
 	if pressed:
+		$Button3.play()
 		$Stage_panel.texture = $cyber_view.get_texture()
 		LevelOptions.stage = "c"
 		$Apocolypse.button_pressed = false
@@ -251,12 +285,14 @@ func _on_cyber_space_toggled(pressed) -> void:
 		stage = true
 
 func _on_options_pressed() -> void:
+	$Button2.play()
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property($Gate1,"position:y",542,0.5)
 	tween.tween_property($Gate2,"position:y",539.105,0.5)
 	tween.tween_property($Main_Menu,"volume_db",-40,2)
 	await tween.finished
+	await get_tree().process_frame
 	get_tree().change_scene_to_file("res://Scenes/options.tscn")
 
 func open():
@@ -291,3 +327,17 @@ func populate_stats():
 		row.add_child(seed_label)
 		row.add_child(time_label)
 		container.add_child(row)
+
+func play_intro():
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property($Gate1,"position:y",542,0.5)
+	tween.tween_property($Gate2,"position:y",539.105,0.5)
+	await tween.finished
+	$Ring.hide()
+	$Text.hide()
+	$TitleBg.hide()
+	main_menu()
+	await get_tree().create_timer(1).timeout
+	LevelOptions.title = false
+	open()
